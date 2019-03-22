@@ -10,6 +10,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -24,7 +25,8 @@ public class HandlerBDD {
     public Connection conectarBD(){
         try{     
             Class.forName("org.postgresql.Driver");             
-            this.conn = DriverManager.getConnection("jdbc:postgresql://localhost/postgres","postgres","1234");
+            this.conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/mda","postgres","1234");
+            System.out.println("HEMOS CONECTADO");
         }catch(ClassNotFoundException |SQLException e){
             Logger.getLogger(HandlerBDD.class.getName()).log(Level.SEVERE, null, e);
         }
@@ -62,5 +64,21 @@ public class HandlerBDD {
             Logger.getLogger(HandlerBDD.class.getName()).log(Level.SEVERE, null, ex);
         }
         cerrarBD(conn);
+    }
+
+    void leerProducto(int idProducto) throws SQLException {
+        conectarBD();        
+        
+        String sql = "SELECT * FROM \"public\".\"Producto\" WHERE idvendedor="+idProducto+"";        
+        Statement stmt = conn.createStatement();
+        ResultSet rs = stmt.executeQuery(sql);
+        while (rs.next()) {
+            String nombre = rs.getString("nombre");
+            System.out.println("El nombre del producto es " + nombre + "\n");
+        }
+        
+    
+        cerrarBD(conn);
+        
     }
 }
