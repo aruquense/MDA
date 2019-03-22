@@ -24,10 +24,25 @@
         </form>
         <hr>
         <h1>Actualizar un producto</h1>
+        <form action="FrontController">
+            <input type="text" placeholder="id del producto" name="idproducto" value="" required>
+            <input type="hidden" name="command" value="UpdateProductCommand">
+            <input type="submit">
+        </form>
         <hr>
         <h1>Lectura de producto</h1>
+        <form action="FrontController">
+            <input type="text" placeholder="id del producto" name="idproducto" value="" required>
+            <input type="hidden" name="command" value="ReadProductCommand">
+            <input type="submit">
+        </form>
         <hr>
         <h1>Eliminar un producto</h1>
+        <form action="FrontController">
+            <input type="text" placeholder="id del producto" name="idproducto" value="" required>
+            <input type="hidden" name="command" value="DelProductCommand">
+            <input type="submit">
+        </form>
         <hr>
         
     </body>

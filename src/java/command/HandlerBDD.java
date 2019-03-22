@@ -50,4 +50,17 @@ public class HandlerBDD {
         }
         cerrarBD(conn);
     }
+
+    void deleteProductoABD(int idProducto) {conectarBD();        
+        
+        String sql = "DELETE INTO \"public\".\"Producto\"(id) values("+idProducto+")";        
+        PreparedStatement enrollItmt;
+        try {
+            enrollItmt = this.conn.prepareStatement(sql);
+            enrollItmt.execute();
+        } catch (SQLException ex) {
+            Logger.getLogger(HandlerBDD.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        cerrarBD(conn);
+    }
 }
