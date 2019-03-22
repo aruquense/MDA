@@ -53,7 +53,7 @@ public class HandlerBDD {
 
     void deleteProductoABD(int idProducto) {conectarBD();        
         
-        String sql = "DELETE INTO \"public\".\"Producto\"(id) values("+idProducto+")";        
+        String sql = "DELETE FROM \"public\".\"Producto\"WHERE id="+idProducto+"";
         PreparedStatement enrollItmt;
         try {
             enrollItmt = this.conn.prepareStatement(sql);
