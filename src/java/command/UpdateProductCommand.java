@@ -5,6 +5,10 @@
  */
 package command;
 
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author Gustavo
@@ -13,14 +17,18 @@ public class UpdateProductCommand extends FrontCommand {
 
     @Override
     public void process() {
-        /*HandlerBDD handler = new HandlerBDD();
-        int idVendedor = Integer.parseInt(request.getParameter("idvendedor"));
+        HandlerBDD handler = new HandlerBDD();
+        int idProducto = Integer.parseInt(request.getParameter("idproducto"));
         String nombre = request.getParameter("nombre");
         double precio = Double.parseDouble(request.getParameter("precio"));
         String descripcion = request.getParameter("descripcion");
         String imagen = request.getParameter("imagen");
-        handler.añadirProductoABD(idVendedor, nombre, precio, descripcion, imagen);
-        forward("/index.jsp");*/
+        try {
+            handler.actualizarProducto(idProducto, nombre, precio, descripcion, imagen);
+        } catch (SQLException ex) {
+            Logger.getLogger(UpdateProductCommand.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        forward("/index.jsp");
     }
     
 }

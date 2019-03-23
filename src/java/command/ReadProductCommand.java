@@ -5,6 +5,10 @@
  */
 package command;
 
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author Gustavo
@@ -15,7 +19,11 @@ public class ReadProductCommand extends FrontCommand {
     public void process() {
         HandlerBDD handler = new HandlerBDD();
         int idProducto = Integer.parseInt(request.getParameter("idproducto"));
-        handler.leerProducto(idProducto);
+        try {
+            handler.leerProducto(idProducto);
+        } catch (SQLException ex) {
+            Logger.getLogger(ReadProductCommand.class.getName()).log(Level.SEVERE, null, ex);
+        }
         forward("/index.jsp");
     }
     

@@ -26,6 +26,10 @@
         <h1>Actualizar un producto</h1>
         <form action="FrontController">
             <input type="text" placeholder="id del producto" name="idproducto" value="" required>
+            <input type="text" placeholder="Nuevo nombre" name="nombre" value="" required>
+            <input type="text" placeholder="Nuevo precio" name="precio" value="" required>
+            <input type="text" placeholder="Nueva descripción" name="descripción" value="" >
+            <input type="text" placeholder="Nueva rutaImagen" name="imagen" value="" required >
             <input type="hidden" name="command" value="UpdateProductCommand">
             <input type="submit">
         </form>

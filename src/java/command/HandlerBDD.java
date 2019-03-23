@@ -24,8 +24,9 @@ public class HandlerBDD {
     }
     public Connection conectarBD(){
         try{     
-            Class.forName("org.postgresql.Driver");             
-            this.conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/mda","postgres","1234");
+            Class.forName("org.postgresql.Driver");      
+            System.out.println("Tratando de conectar");
+            this.conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/MDA_bd2","postgres","1234");
             System.out.println("HEMOS CONECTADO");
         }catch(ClassNotFoundException |SQLException e){
             Logger.getLogger(HandlerBDD.class.getName()).log(Level.SEVERE, null, e);
@@ -66,7 +67,27 @@ public class HandlerBDD {
         cerrarBD(conn);
     }
 
-    void leerProducto(int idProducto) throws SQLException {
+    void actualizarProducto(int idProducto, String nombre, double precio, String descripcion, String imagen) throws SQLException {
+        conectarBD();        
+        
+        String sql = "UPDATE \"public\".\"Producto\" SET nombre = ? ,precio = ? ,descripcion = ? WHERE id="+idProducto+"";
+        PreparedStatement enrollItmt;
+        try {
+            enrollItmt = this.conn.prepareStatement(sql);
+            enrollItmt.setString(1, nombre);
+            enrollItmt.setDouble(2, precio);
+            enrollItmt.setString(3, descripcion);
+            enrollItmt.execute();
+        } catch (SQLException ex) {
+            Logger.getLogger(HandlerBDD.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        cerrarBD(conn);
+        
+    
+        cerrarBD(conn);
+        
+    }
+        void leerProducto(int idProducto) throws SQLException {
         conectarBD();        
         
         String sql = "SELECT * FROM \"public\".\"Producto\" WHERE idvendedor="+idProducto+"";        
