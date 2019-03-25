@@ -26,7 +26,7 @@ public class HandlerBDD {
         try{     
             Class.forName("org.postgresql.Driver");      
             System.out.println("Tratando de conectar");
-            this.conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/MDA_bd2","postgres","1234");
+            this.conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/mdaBDD3","postgres","1234");
             System.out.println("HEMOS CONECTADO");
         }catch(ClassNotFoundException |SQLException e){
             Logger.getLogger(HandlerBDD.class.getName()).log(Level.SEVERE, null, e);
@@ -70,13 +70,14 @@ public class HandlerBDD {
     void actualizarProducto(int idProducto, String nombre, double precio, String descripcion, String imagen) throws SQLException {
         conectarBD();        
         
-        String sql = "UPDATE \"public\".\"Producto\" SET nombre = ? ,precio = ? ,descripcion = ? WHERE id="+idProducto+"";
+        String sql = "UPDATE \"public\".\"Producto\" SET nombre = ? ,precio = ? ,descripcion = ?, imagen = ? WHERE id="+idProducto+"";
         PreparedStatement enrollItmt;
         try {
             enrollItmt = this.conn.prepareStatement(sql);
             enrollItmt.setString(1, nombre);
             enrollItmt.setDouble(2, precio);
             enrollItmt.setString(3, descripcion);
+            enrollItmt.setString(4, imagen);
             enrollItmt.execute();
         } catch (SQLException ex) {
             Logger.getLogger(HandlerBDD.class.getName()).log(Level.SEVERE, null, ex);
@@ -87,19 +88,18 @@ public class HandlerBDD {
         cerrarBD(conn);
         
     }
-        void leerProducto(int idProducto) throws SQLException {
+        String leerProducto(int idProducto) throws SQLException {
         conectarBD();        
         
-        String sql = "SELECT * FROM \"public\".\"Producto\" WHERE idvendedor="+idProducto+"";        
+        String sql = "SELECT * FROM \"public\".\"Producto\" WHERE id="+idProducto+"";        
         Statement stmt = conn.createStatement();
         ResultSet rs = stmt.executeQuery(sql);
         while (rs.next()) {
             String nombre = rs.getString("nombre");
             System.out.println("El nombre del producto es " + nombre + "\n");
+            return nombre;
         }
-        
-    
         cerrarBD(conn);
-        
+        return "";
     }
 }

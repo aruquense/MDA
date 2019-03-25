@@ -17,7 +17,7 @@
             <input type="text" placeholder="id del vendedor" name="idvendedor" value="" required>
             <input type="text" placeholder="nombre" name="nombre" value="" required>
             <input type="text" placeholder="precio" name="precio" value="" required>
-            <input type="text" placeholder="descripción" name="descripción" value="" >
+            <input type="text" placeholder="descripción" name="descripcion" value="" >
             <input type="text" placeholder="rutaImagen" name="imagen" value="" required >
             <input type="hidden" name="command" value="AddProductCommand">
             <input type="submit">
@@ -28,7 +28,7 @@
             <input type="text" placeholder="id del producto" name="idproducto" value="" required>
             <input type="text" placeholder="Nuevo nombre" name="nombre" value="" required>
             <input type="text" placeholder="Nuevo precio" name="precio" value="" required>
-            <input type="text" placeholder="Nueva descripción" name="descripción" value="" >
+            <input type="text" placeholder="Nueva descripción" name="descripcion" value="" >
             <input type="text" placeholder="Nueva rutaImagen" name="imagen" value="" required >
             <input type="hidden" name="command" value="UpdateProductCommand">
             <input type="submit">
@@ -48,6 +48,8 @@
             <input type="submit">
         </form>
         <hr>
-        
+        <% if(request.getParameter("name")!=null){%>
+        <h1>El nombre del producto es: <%=request.getParameter("name")%></h1>  
+        <%}%>
     </body>
 </html>

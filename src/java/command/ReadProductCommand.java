@@ -18,13 +18,15 @@ public class ReadProductCommand extends FrontCommand {
     @Override
     public void process() {
         HandlerBDD handler = new HandlerBDD();
+        String name="";
         int idProducto = Integer.parseInt(request.getParameter("idproducto"));
         try {
-            handler.leerProducto(idProducto);
+            name = handler.leerProducto(idProducto);            
         } catch (SQLException ex) {
             Logger.getLogger(ReadProductCommand.class.getName()).log(Level.SEVERE, null, ex);
         }
-        forward("/index.jsp");
+        System.out.println(name);
+        forward("/index.jsp?name="+name);
     }
     
 }
