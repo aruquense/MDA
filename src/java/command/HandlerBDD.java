@@ -11,6 +11,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -101,5 +102,24 @@ public class HandlerBDD {
         }
         cerrarBD(conn);
         return "";
+    }
+
+    public ArrayList<String> searchProduct(String parameter) {
+        conectarBD();
+        ArrayList<String> searchList = new ArrayList<>();
+        String sql = "SELECT * FROM \"public\".\"Producto\" WHERE nombre LIKE '%"+parameter+"%'";        
+        Statement stmt;
+        try {
+            stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
+            while (rs.next()) {
+                String nombre = rs.getString("nombre");            
+                searchList.add(nombre);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(HandlerBDD.class.getName()).log(Level.SEVERE, null, ex);
+        }        
+        cerrarBD(conn);
+        return searchList;
     }
 }
