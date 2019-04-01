@@ -1,10 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package command;
 
+import modelo.Producto;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -15,10 +11,6 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-/**
- *
- * @author Gustavo
- */
 public class HandlerBDD {
     private Connection conn = null;
     public HandlerBDD(){        
@@ -27,7 +19,7 @@ public class HandlerBDD {
         try{     
             Class.forName("org.postgresql.Driver");      
             System.out.println("Tratando de conectar");
-            this.conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/mdaBDD3","postgres","1234");
+            this.conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres","postgres","1234");
             System.out.println("HEMOS CONECTADO");
         }catch(ClassNotFoundException |SQLException e){
             Logger.getLogger(HandlerBDD.class.getName()).log(Level.SEVERE, null, e);
@@ -104,17 +96,23 @@ public class HandlerBDD {
         return "";
     }
 
-    public ArrayList<String> searchProduct(String parameter) {
+    public ArrayList<Producto> searchProduct(String parameter) {
         conectarBD();
-        ArrayList<String> searchList = new ArrayList<>();
-        String sql = "SELECT * FROM \"public\".\"Producto\" WHERE nombre LIKE '%"+parameter+"%'";        
+        ArrayList<Producto> searchList = new ArrayList<>();
+        String sql = "SELECT * FROM \"public\".\"Producto\" WHERE LOWER(nombre) LIKE LOWER('%"+parameter+"%')";        
         Statement stmt;
         try {
             stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()) {
+                Long id = rs.getLong("id");
+                Long idvendedor = rs.getLong("idvendedor");
+                Double precio = rs.getDouble("precio");
+                String descripcion = rs.getString("descripcion");
+                String img = rs.getString("imagen");
                 String nombre = rs.getString("nombre");            
-                searchList.add(nombre);
+                Producto producto = new Producto(id,nombre,idvendedor,precio,descripcion,img);
+                searchList.add(producto);
             }
         } catch (SQLException ex) {
             Logger.getLogger(HandlerBDD.class.getName()).log(Level.SEVERE, null, ex);

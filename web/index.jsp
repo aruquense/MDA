@@ -1,9 +1,5 @@
-<%-- 
-    Document   : index
-    Created on : 19-mar-2019, 14:55:11
-    Author     : Gustavo
---%>
-
+<%@page import="modelo.Producto"%>
+<%@page import="command.FrontController"%>
 <%@page import="java.util.ArrayList"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -61,8 +57,9 @@
         <%}%>
         
         <% if(request.getAttribute("searchList")!=null){
-            ArrayList<String> list = (ArrayList<String>) request.getAttribute("searchList");
-            for (String name : list) {                                    
+            ArrayList<Producto> list = (ArrayList<Producto>) request.getAttribute("searchList");
+            for (Producto prod : list) {                                    
+            String name = prod.toString();            
         %>
         <p>Búsqueda <%=name%></p>  
         <%  }
