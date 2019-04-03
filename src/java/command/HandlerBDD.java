@@ -33,7 +33,23 @@ public class HandlerBDD {
             Logger.getLogger(HandlerBDD.class.getName()).log(Level.SEVERE, null, e);
         }
     }
-    public void añadirProductoABD(int idvendedor, String nombre, double precio, String descripcion, String imagen){
+    public int encontrarNúmeroProductos(){
+        try {
+            conectarBD();
+            String sql ="SELECT COUNT(*) AS total FROM \"public\".\"Producto\"";
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
+            while(rs.next()){            
+                int total = rs.getInt("total");
+                cerrarBD(conn); 
+                return total;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(HandlerBDD.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return -1;
+    }
+    public void añadirProducto(int idvendedor, String nombre, double precio, String descripcion, String imagen){
         conectarBD();        
         
         String sql = "INSERT INTO \"public\".\"Producto\"(idvendedor,nombre,precio,descripcion,imagen) values("+idvendedor+",\'"+nombre+"\',"+precio+",\'"+descripcion+"\',\'"+imagen+"\')";        
@@ -75,9 +91,6 @@ public class HandlerBDD {
         } catch (SQLException ex) {
             Logger.getLogger(HandlerBDD.class.getName()).log(Level.SEVERE, null, ex);
         }
-        cerrarBD(conn);
-        
-    
         cerrarBD(conn);
         
     }

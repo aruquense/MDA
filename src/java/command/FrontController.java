@@ -3,6 +3,7 @@ package command;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -10,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 
 @WebServlet(name = "FrontController", urlPatterns = {"/FrontController"})
+@MultipartConfig
 public class FrontController extends HttpServlet {
   
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
@@ -39,8 +41,7 @@ public class FrontController extends HttpServlet {
         return null;
     }
     private Class getCommandClass(HttpServletRequest req){
-        Class result;
-        
+        Class result;        
         final String command = "command."+(String)
         req.getParameter("command");
         try {
@@ -56,8 +57,8 @@ public class FrontController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        processRequest(request, response);
+            throws ServletException, IOException {        
+        doGet(request,response);
     }
 
 
