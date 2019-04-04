@@ -13,7 +13,8 @@ public class GetOrderCommand extends FrontCommand {
         for (Pedido order : orders) {
             System.out.println("Order:" + order.toString());
         }
-        //forward("/index.jsp");
+        request.setAttribute("orderList", orders);
+        forward("/index.jsp");
     }
     
 }

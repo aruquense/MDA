@@ -1,3 +1,4 @@
+<%@page import="modelo.Pedido"%>
 <%@page import="modelo.Producto"%>
 <%@page import="command.FrontController"%>
 <%@page import="java.util.ArrayList"%>
@@ -71,6 +72,20 @@
         %>
         <p>Búsqueda <%=name%></p>  
         <%  }
+        }%>
+        <% if(request.getAttribute("orderList")!=null){
+            ArrayList<Pedido> list = (ArrayList<Pedido>) request.getAttribute("orderList");
+            for (Pedido order : list) {                                    
+            String name = order.toString();            
+        %>
+        <p>Pedido:  <%=name%>, tiene los productos: </p>          
+        <%  for(Integer idProd: order.getIdproductos()){                
+        %>
+        <p><%=idProd%></p>  
+            <%}
+          }
+
+        
         }%>
         
     </body>
