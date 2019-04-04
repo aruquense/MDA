@@ -2,9 +2,9 @@ package modelo;
 public class Pedido {
     private Long id, idcomprador,idvendedor;
     private String estado;
-    private int[] idproductos;
+    private Integer[] idproductos;
 
-    public Pedido(Long id, Long idcomprador, Long idvendedor, String estado, int[] idproductos) {
+    public Pedido(Long id, Long idcomprador, Long idvendedor, String estado, Integer[] idproductos) {
         this.id = id;
         this.idcomprador = idcomprador;
         this.idvendedor = idvendedor;
@@ -44,16 +44,16 @@ public class Pedido {
         this.estado = estado;
     }
 
-    public int[] getIdproductos() {
+    public Integer[] getIdproductos() {
         return idproductos;
     }
 
-    public void setIdproductos(int[] idproductos) {
+    public void setIdproductos(Integer[] idproductos) {
         this.idproductos = idproductos;
     }
 
     @Override
     public String toString() {
-        return "Pedido{" + "id=" + id + ", idcomprador=" + idcomprador + ", idvendedor=" + idvendedor + ", estado=" + estado + ", idproductos=" + idproductos + '}';
+        return "Pedido{" + "id=" + id + ", idcomprador=" + idcomprador + ", idvendedor=" + idvendedor + ", estado=" + estado + ", idproductos=" + idproductos.toString() + '}';
     }            
 }

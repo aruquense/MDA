@@ -1,5 +1,6 @@
 package command;
 
+import java.sql.Array;
 import modelo.Producto;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -10,6 +11,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import modelo.Pedido;
 
 public class HandlerBDD {
     private Connection conn = null;
@@ -133,4 +135,28 @@ public class HandlerBDD {
         cerrarBD(conn);
         return searchList;
     }
+    public ArrayList<Pedido> obtenerPedidos(int idUsuario){
+        conectarBD();
+        ArrayList<Pedido> orderList = new ArrayList<>();
+        String sql = "SELECT * FROM \"public\".\"Pedido\" WHERE idcomprador="+idUsuario;        
+        Statement stmt;
+        try {
+            stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
+            while (rs.next()) {
+                Long id = rs.getLong("id");
+                Long idcomprador = rs.getLong("idcomprador");
+                Long idvendedor = rs.getLong("idvendedor");                
+                String estado = rs.getString("estado");                                       
+                Array productos = rs.getArray("idproductos");            
+                Integer[] idProductos = (Integer[])productos.getArray();
+                Pedido pedido = new Pedido(id, idcomprador, idvendedor, estado, idProductos);
+                orderList.add(pedido);                
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(HandlerBDD.class.getName()).log(Level.SEVERE, null, ex);
+        }        
+        cerrarBD(conn);
+        return orderList;
+    }    
 }

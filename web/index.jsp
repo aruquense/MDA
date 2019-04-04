@@ -52,6 +52,14 @@
             <input type="submit">
         </form>
         <hr>
+        <hr>
+        <h1>Obtener pedidos de un usuario</h1>
+        <form action="FrontController">
+            <input type="text" placeholder="Elige un usuario" name="idUser" value="" required>
+            <input type="hidden" name="command" value="GetOrderCommand">
+            <input type="submit">
+        </form>
+        <hr>
         <% if(request.getParameter("name")!=null){%>
         <h1>El nombre del producto es: <%=request.getParameter("name")%></h1>  
         <%}%>
