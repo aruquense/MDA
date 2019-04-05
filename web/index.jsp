@@ -9,7 +9,23 @@
         <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
         <title>Sprint 0 MDA</title>
     </head>
-    <body>
+    <body>        
+        <h1>Score user</h1>
+        <form action="FrontController" method="POST" enctype="multipart/form-data" >
+            <input type="text" placeholder="id" name="idUsuario" value="" required>
+            <input type="text" placeholder="puntuacion" name="puntuacion" value="" required>                
+            <input type="hidden" name="command" value="ScoreUserCommand">    
+            <input type="submit">
+        </form>            
+        <h1>Register user</h1>
+        <form action="FrontController" method="POST" enctype="multipart/form-data" >
+            <input type="text" placeholder="nombre" name="nombre" value="" required>
+            <input type="text" placeholder="correo" name="correo" value="" required>
+            <input type="password" placeholder="contrasena" name="contrasena" value="" required>
+            <input type="text" placeholder="localizacion" name="localizacion" value="" required>                      
+            <input type="hidden" name="command" value="RegisterUserCommand">    
+            <input type="submit">
+        </form>     
         <h1>Inserción de producto</h1>
         <form action="FrontController" method="POST" enctype="multipart/form-data" >
             <input type="text" placeholder="id del vendedor" name="idvendedor" value="" required>
