@@ -1,3 +1,5 @@
+<%@page import="java.util.Map"%>
+<%@page import="modelo.Carrito"%>
 <%@page import="modelo.Pedido"%>
 <%@page import="modelo.Producto"%>
 <%@page import="command.FrontController"%>
@@ -77,6 +79,21 @@
             <input type="submit">
         </form>
         <hr>
+        <h1>Añadir producto al carrito</h1>
+        <form action="FrontController">
+            <input type="text" placeholder="id del producto" name="idproducto" value="" required>
+            <input type="text" placeholder="cantidad" name="cantidad" value="" required>
+            <input type="hidden" name="command" value="AddToShoppingCartCommand">
+            <input type="submit">
+        </form>
+        <hr>
+        <h1>Eliminar producto del carrito</h1>
+        <form action="FrontController">
+            <input type="text" placeholder="id del producto" name="idproducto" value="" required>
+            <input type="hidden" name="command" value="RemoveFromShoppingCartCommand">
+            <input type="submit">
+        </form>
+        <hr>
         <% if(request.getParameter("name")!=null){%>
         <h1>El nombre del producto es: <%=request.getParameter("name")%></h1>  
         <%}%>
@@ -103,6 +120,17 @@
 
         
         }%>
+        
+        <% Carrito l = (Carrito) request.getSession().getAttribute("carrito"); %>
+        <%if (l != null){%>
+        <p>El carrito contiene: <p><br>
+            <% Map<Producto,Integer> elements = l.getContents(); %>
+            <% for (Map.Entry<Producto, Integer> entry : elements.entrySet()) { %>
+                <% String name = entry.getKey().getNombre();%>
+                <%int cantidad = entry.getValue();%>
+                <p>Producto: <%=name%>, cantidad: <%=cantidad%><p>
+            <%}%>
+        <%}%>
         
     </body>
 </html>

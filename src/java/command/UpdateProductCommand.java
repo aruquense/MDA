@@ -19,7 +19,7 @@ public class UpdateProductCommand extends FrontCommand {
         } catch (SQLException ex) {
             Logger.getLogger(UpdateProductCommand.class.getName()).log(Level.SEVERE, null, ex);
         }
-        forward("/index.jsp");
+
     }
     
 }
