@@ -22,7 +22,7 @@ public class HandlerBDD {
         try{     
             Class.forName("org.postgresql.Driver");      
             System.out.println("Tratando de conectar");
-            this.conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/mdaBDD3","postgres","1234");
+            this.conn = DriverManager.getConnection("jdbc:postgresql://localhost:5433/mdaBDD","postgres","1234");
             System.out.println("HEMOS CONECTADO");
         }catch(ClassNotFoundException |SQLException e){
             Logger.getLogger(HandlerBDD.class.getName()).log(Level.SEVERE, null, e);
@@ -243,10 +243,11 @@ public class HandlerBDD {
                 if(productos != null)
                     idpedidos = (Integer[])productos.getArray();                
                 Double valoracion = rs.getDouble("valoracion");
-                long nventas = rs.getLong("nventas");
-                long nvisitas = rs.getLong("nvisitas");
-                long id = rs.getLong("id");
-                user = new Usuario(id, nventas, nvisitas,localizacion, nombre, correo, contrasena, valoracion, idpedidos, esPremium);
+                int nventas = rs.getInt("nventas");
+                int nvisitas = rs.getInt("nvisitas");
+                int nvaloraciones = rs.getInt("nvaloraciones");
+                int id = rs.getInt("id");
+                user = new Usuario(Long.valueOf(id), nventas, nvisitas,localizacion, nombre, correo, contrasena, valoracion, idpedidos, esPremium,nvaloraciones);
             }
         }catch(SQLException e){
         }
@@ -255,5 +256,23 @@ public class HandlerBDD {
         
         
     }
+
+    void updateUser(String nombre, String correo, String contrasena, String localizacion) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    void updateNVisitas(int idUser, int nvisitas) { String sql ="UPDATE public.\"Usuario\" SET nvisitas=? WHERE ID="+idUser;
+        PreparedStatement enrollItmt;
+        try {
+            enrollItmt = this.conn.prepareStatement(sql);
+            enrollItmt.setInt(1, nvisitas);
+            enrollItmt.execute();
+        } catch (SQLException ex) {
+            Logger.getLogger(HandlerBDD.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        cerrarBD(conn);
+
+    }
+
 }
 

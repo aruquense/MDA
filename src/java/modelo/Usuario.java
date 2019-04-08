@@ -1,13 +1,14 @@
 package modelo;
 
 public class Usuario {
-    private Long id, nVentas, nVisitas;
+    private Long id;
+    private int nVentas, nVisitas,nValoraciones;
     private String nombre, correo, contrasena,localizacion;
     private Double valoracion;
     private Integer[] idpedidos;
     private boolean espremium;
 
-    public Usuario(Long id, Long nVentas, Long nVisitas,String localizacion, String nombre, String correo, String contrasena, Double valoracion, Integer[] idpedidos, int espremium) {
+    public Usuario(Long id, int nVentas, int nVisitas,String localizacion, String nombre, String correo, String contrasena, Double valoracion, Integer[] idpedidos, int espremium, int nValoraciones) {
         this.id = id;
         this.nVentas = nVentas;
         this.nVisitas = nVisitas;
@@ -17,7 +18,8 @@ public class Usuario {
         this.contrasena = contrasena;
         this.valoracion = valoracion;
         this.idpedidos = idpedidos;
-        this.espremium = (espremium == 0);       
+        this.espremium = (espremium == 0);  
+        this.nValoraciones=nValoraciones;
     }
 
     public Usuario() {    
@@ -40,19 +42,19 @@ public class Usuario {
         this.id = id;
     }
 
-    public Long getnVentas() {
+    public int getnVentas() {
         return nVentas;
     }
 
-    public void setnVentas(Long nVentas) {
+    public void setnVentas(int nVentas) {
         this.nVentas = nVentas;
     }
 
-    public Long getnVisitas() {
+    public int getnVisitas() {
         return nVisitas;
     }
 
-    public void setnVisitas(Long nVisitas) {
+    public void setnVisitas(int nVisitas) {
         this.nVisitas = nVisitas;
     }
 
@@ -102,11 +104,20 @@ public class Usuario {
 
     public void setEspremium(boolean espremium) {
         this.espremium = espremium;
+    }    
+    public int getnValoraciones() {
+        return nValoraciones;
+    }
+
+    public void setnValoraciones(int nValoraciones) {
+        this.nValoraciones = nValoraciones;
     }
 
     @Override
     public String toString() {
         return "Usuario{" + "id=" + id + ", nVentas=" + nVentas + ", nVisitas=" + nVisitas + ", nombre=" + nombre + ", correo=" + correo + ", contrasena=" + contrasena + ", valoracion=" + valoracion + ", idpedidos=" + idpedidos + ", espremium=" + espremium + '}';
     }
+
+
     
 }

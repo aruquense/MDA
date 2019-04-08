@@ -5,7 +5,6 @@
 --%>
 
 <%@page import="modelo.Usuario"%>
-<%@page import="modelo.Producto"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -42,44 +41,38 @@
         </nav>
     </div>
     <!-- End: Navigation with Button -->
-    <%Producto producto = null;
-    producto = (Producto) request.getAttribute("product");
-    Usuario user = (Usuario) request.getAttribute("usuario");
-    String name = user.getNombre()+"&nbsp;";
-    
-    %>
+    <%Usuario user = null;%>
+    <%user = (Usuario) request.getAttribute("user");%>
     <div class="container">
-        <!-- Start: NombreProducto -->
+        <!-- Start: NombreUsuario -->
 
         <h1 style="margin-top: 30px;"><%= request.getParameter("nombre") %></h1>
-        <!-- End: NombreProducto -->
+        <!-- End: NombreUsuario -->
     </div>
     <!-- Start: 1 Row 2 Columns -->
     <div style="margin-top: 13px;margin-bottom: 95px;">
         <div class="container">
             <div class="row">
-                <div class="col-md-6 offset-xl-0" style="margin-left: -30px;"><img src=<%= request.getParameter("img") %> style="width: 444px;margin-bottom: 0px;margin-top: 5px;margin-right: 0px;"></div>
+                <div class="col-md-6 offset-xl-0" style="margin-left: -30px;"><img src="assets/img/man-user-t-1.png" style="height: 200px;width: 200px;margin-bottom: 0px;margin-top: 5px;margin-right: 0px;"></div>
+                <!--<div class="col-md-6 offset-xl-0" style="margin-left: -30px;"><img src=<%= request.getParameter("img") %> style="width: 444px;margin-bottom: 0px;margin-top: 5px;margin-right: 0px;"></div>-->
                 <div class="col-md-6">
                     <!-- Start: DescripcionLabel -->
-                    <h3 class="text-left" style="margin-top: 10px;">Descripción:</h3>
+                    <h3 class="text-left" style="margin-top: 10px;">Localización:</h3>
                     <!-- End: DescripcionLabel -->
                     <!-- Start: DescripcionParrafo -->
-                    <p class="text-justify" style="margin-top: 20px;"><%= request.getParameter("descripcion") %>&nbsp;</p>
+                    <p class="text-justify" style="margin-top: 20px;"><%= request.getParameter("localizacion") %>&nbsp;</p>
                     <!-- End: DescripcionParrafo -->
-                    <p style="font-style: italic;font-size: 15px;margin-top: 25px;">Este producto no se puede enviar a Canarias</p>
+                    <p style="font-style: italic;font-size: 15px;margin-top: 25px;">Este usuario no se puede enviar a Canarias xD</p>
                     <!-- Start: EtiquetaPrecio -->
-                    <h3 class="text-left" style="margin-top: 35px;">Vendedor:&nbsp;</h3>
+                    <h3 class="text-left" style="margin-top: 35px;">valoracion: &nbsp;</h3>
                     <!-- End: EtiquetaPrecio -->
                     <!-- Start: Valor del Precio -->
-                    <p style="color: #56c6c6;margin-top: -34px;margin-left: 152px;font-weight: bold;"><%=name%><i class="fa fa-star float-none" style="margin-left: 42px;color: rgb(169,41,41);"></i><i class="fa fa-star float-none" style="margin-left: 3px;color: rgb(169,41,41);"></i><i class="fa fa-star float-none"
-                            style="margin-left: 3px;color: rgb(169,41,41);"></i><i class="fa fa-star float-none" style="margin-left: 3px;color: rgb(169,41,41);"></i><i class="fa fa-star float-none" style="margin-left: 3px;color: rgb(152,151,151);"></i></p>
-                    <!-- End: Valor del Precio --><a href="#" class="action"></a>
-                    <!-- Start: EtiquetaPrecio -->
-                    <h3 class="text-left" style="margin-top: 35px;">Precio:&nbsp;</h3>
-                    <!-- End: EtiquetaPrecio -->
-                    <!-- Start: Valor del Precio -->
-                    <p style="color: #b10c0c;margin-top: -34px;margin-left: 104px;font-weight: bold;"><%= request.getParameter("precio") %>€&nbsp;</p>
+                    <p style="font-style: italic;font-size: 15px;margin-top: 25px;"><%= request.getParameter("valoracion") %></p>
                     <!-- End: Valor del Precio -->
+                    <h3 class="text-left" style="margin-top: 35px;">nvisitas &nbsp;</h3>
+                    <p style="font-style: italic;font-size: 15px;margin-top: 25px;"><%= request.getParameter("nvisitas") %></p>
+                    <h3 class="text-left" style="margin-top: 35px;">nvaloraciones &nbsp;</h3>
+                    <p style="font-style: italic;font-size: 15px;margin-top: 25px;"><%= request.getParameter("nvaloraciones") %></p>
                     <div class="btn-group" role="group" style="margin-top: 35px;margin-left: 54px;"><button class="btn btn-primary border rounded" type="button" style="margin-right: 11px;margin-left: 0px;width: 193px;background-color: rgb(169,41,41);height: 58px;"><i class="material-icons float-left" style="padding-right: 9px;margin-right: -11px;margin-left: 4px;">shopping_cart</i>Añadir a la cesta</button>
                         <button
                             class="btn btn-primary border rounded" type="button" style="margin-right: 11px;margin-left: 6px;width: 212px;background-color: rgb(169,41,41);"><i class="material-icons float-left" style="padding-right: 9px;margin-right: -11px;margin-left: 4px;">question_answer</i>Preguntar vendedor</button>
