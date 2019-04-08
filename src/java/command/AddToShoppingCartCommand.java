@@ -35,7 +35,7 @@ public class AddToShoppingCartCommand extends FrontCommand {
             carrito.initialize();
             sesion.setAttribute("carrito",carrito);
         }
-        carrito.addProduct(product,request.getParameter("cantidad"));
-        forward("/index.jsp");
+        carrito.addProduct(product);
+        forward("/carrito.jsp");
     }
 }

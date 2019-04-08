@@ -24,7 +24,7 @@ public class RemoveFromShoppingCartCommand extends FrontCommand{
             sesion.setAttribute("carrito",carrito);
         }
         carrito.deleteProduct(request.getParameter("idproducto"));
-        forward("/index.jsp");
+        forward("/carrito.jsp");
     }
     
 }

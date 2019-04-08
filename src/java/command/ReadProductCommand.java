@@ -18,15 +18,10 @@ public class ReadProductCommand extends FrontCommand {
         } catch (SQLException ex) {
             Logger.getLogger(ReadProductCommand.class.getName()).log(Level.SEVERE, null, ex);
         }
-        Long id = product.getId();
-        Long idvendedor = product.getIdvendedor();
-        Double precio = product.getPrecio();
-        String descripcion = product.getDescripcion();
-        String img = product.getImg();
-        String nombre = product.getNombre();  
-        Usuario user =  handler.getUsuarioByID(idvendedor);
+        Usuario user =  handler.getUsuarioByID(product.getIdvendedor());
+        request.setAttribute("product", product);
         request.setAttribute("usuario", user);
-        forward("/product.jsp?id="+id+"&idvendedor="+idvendedor+"&precio="+precio+"&descripcion="+descripcion+"&img="+img+"&nombre="+nombre);
+        forward("/product.jsp");
     }
     
 }

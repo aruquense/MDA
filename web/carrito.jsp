@@ -1,11 +1,12 @@
 <%-- 
-    Document   : product
-    Created on : 04-abr-2019, 19:10:19
+    Document   : carrito
+    Created on : 08-abr-2019, 16:59:33
     Author     : sergio
 --%>
 
-<%@page import="modelo.Usuario"%>
+<%@page import="java.util.List"%>
 <%@page import="modelo.Producto"%>
+<%@page import="modelo.Carrito"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -42,59 +43,61 @@
         </nav>
     </div>
     <!-- End: Navigation with Button -->
-    <%Producto producto = null;
-    producto = (Producto) request.getAttribute("product");
-    Usuario user = (Usuario) request.getAttribute("usuario");
-    String name = user.getNombre()+"&nbsp;";
-    %>
-    <div class="container">
-        <!-- Start: NombreProducto -->
-
-        <h1 style="margin-top: 30px;"><%=producto.getNombre() %></h1>
-        <!-- End: NombreProducto -->
-    </div>
     <!-- Start: 1 Row 2 Columns -->
-    <div style="margin-top: 13px;margin-bottom: 95px;">
+    <div>
         <div class="container">
-            <div class="row">
-                <div class="col-md-6 offset-xl-0" style="margin-left: -30px;"><img src=<%= producto.getImg() %> style="width: 444px;margin-bottom: 0px;margin-top: 5px;margin-right: 0px;"></div>
+            <div class="row" style="margin-top: 25px;margin-bottom: 41px;">
                 <div class="col-md-6">
-                    <!-- Start: DescripcionLabel -->
-                    <h3 class="text-left" style="margin-top: 10px;">Descripción:</h3>
-                    <!-- End: DescripcionLabel -->
-                    <!-- Start: DescripcionParrafo -->
-                    <p class="text-justify" style="margin-top: 20px;"><%= producto.getDescripcion() %>&nbsp;</p>
-                    <!-- End: DescripcionParrafo -->
-                    <p style="font-style: italic;font-size: 15px;margin-top: 25px;">Este producto no se puede enviar a Canarias</p>
-                    <!-- Start: EtiquetaPrecio -->
-                    <h3 class="text-left" style="margin-top: 35px;">Vendedor:&nbsp;</h3>
-                    <!-- End: EtiquetaPrecio -->
-                    <!-- Start: Valor del Precio -->
-                    <p style="color: #56c6c6;margin-top: -34px;margin-left: 152px;font-weight: bold;"><%=name%><i class="fa fa-star float-none" style="margin-left: 42px;color: rgb(169,41,41);"></i><i class="fa fa-star float-none" style="margin-left: 3px;color: rgb(169,41,41);"></i><i class="fa fa-star float-none"
-                            style="margin-left: 3px;color: rgb(169,41,41);"></i><i class="fa fa-star float-none" style="margin-left: 3px;color: rgb(169,41,41);"></i><i class="fa fa-star float-none" style="margin-left: 3px;color: rgb(152,151,151);"></i></p>
-                    <!-- End: Valor del Precio -->
-                    <!-- Start: EtiquetaPrecio -->
-                    <h3 class="text-left" style="margin-top: 35px;">Precio:&nbsp;</h3>
-                    <!-- End: EtiquetaPrecio -->
-                    <!-- Start: Valor del Precio -->
-                    <p style="color: #b10c0c;margin-top: -34px;margin-left: 104px;font-weight: bold;"><%= producto.getPrecio() %>€&nbsp;</p>
-                    <!-- End: Valor del Precio -->
-                    <div class="btn-group" role="group" style="margin-top: 35px;margin-left: 54px;">
-                        <form action="FrontController">
-                            <input type="hidden" name="command" value="AddToShoppingCartCommand">
-                            <input type="hidden" name="idproducto" value=<%= producto.getId().toString() %>>
-                            <button type="submit"  class="btn btn-primary border rounded" style="margin-right: 11px;margin-left: 0px;width: 193px;background-color: rgb(169,41,41);height: 58px;">
-                                <i class="material-icons float-left" style="padding-right: 9px;margin-right: -11px;margin-left: 4px;">shopping_cart</i>Añadir a la cesta
-                            </button>
-                        </form>
-                        <button
-                            class="btn btn-primary border rounded" type="button" style="margin-right: 11px;margin-left: 6px;width: 212px;background-color: rgb(169,41,41);"><i class="material-icons float-left" style="padding-right: 9px;margin-right: -11px;margin-left: 4px;">question_answer</i>Preguntar vendedor</button>
-                    </div>
+                    <!-- Start: NombreProducto -->
+                    <h1 style="margin-top: 0px;margin-left: 34px;">Cesta</h1>
+                    <!-- End: NombreProducto -->
+                </div>
+                <div class="col-md-6 d-xl-flex justify-content-xl-end">
+                    <!-- Start: eliminarDeLaCestaButton --><button class="btn btn-primary border rounded" type="button" style="margin-right: 0px;margin-left: 0px;width: 213px;background-color: rgb(85,85,85);height: 43px;margin-top: 8px;padding: 0px;"><i class="fas fa-chevron-circle-down float-left d-xl-flex justify-content-xl-end" style="padding-right: 9px;margin-right: -10px;margin-left: 4px;margin-top: 5px;width: 34px;"></i>Proceder a la compra</button>
+                    <!-- End: eliminarDeLaCestaButton -->
                 </div>
             </div>
         </div>
     </div>
+        <% Carrito l = (Carrito) request.getSession().getAttribute("carrito"); 
+        List<Producto> productos=null;%>
     <!-- End: 1 Row 2 Columns -->
+    <!-- Start: cesta -->
+    <div class="container" style="margin-bottom: 130px;margin-top: 32px;">
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th style="font-size: 20px;">Producto</th>
+                        <th style="font-size: 20px;">Precio</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <% int i = 1;%>
+                <%if (l != null){
+                productos = l.getContents();%>
+                <tbody>
+                    <%for(Producto p : productos ) {%>
+                    <tr>
+                        <td><img src=<%=p.getImg()%> style="width: 162px;margin-right: -40px;"></td>
+                        <td style="width: 300px;padding-top: 21px;"><%=p.getNombre()%></td>
+                        <td style="width: 190px;margin-top: 0px;padding-top: 21px;"><strong><%=p.getPrecio()%>€&nbsp;</strong><br><br></td>
+                        <form action="FrontController">
+                            <input type="hidden" name="command" value="RemoveFromShoppingCartCommand">
+                            <input type="hidden" name="idproducto" value=<%= p.getId().toString() %>>
+                            <td style="width: 360px;"><button type="submit" class="btn btn-primary border rounded" style="margin-right: 11px;margin-left: 0px;width: 135px;background-color: rgb(169,41,41);height: 42px;margin-top: 0px;">
+                                <i class="material-icons float-left" style="padding-right: 9px;margin-right: -11px;margin-left: 4px;">close</i>Eliminar
+                            </button>
+                       </form>
+                    </tr>
+                </tbody>
+                    <%}%>
+                <%}%>
+            </table>
+        </div>
+    </div>
+    <!-- End: cesta -->
     <!-- Start: Footer Dark -->
     <div class="footer-dark">
         <footer>

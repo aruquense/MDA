@@ -6,35 +6,32 @@
 package modelo;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
 
 /**
  *
  * @author sergio
  */
 public class Carrito {
-    Map<Producto,Integer> productList;
+    List<Producto> productList;
     public void initialize(){
-        productList = new HashMap<Producto,Integer>();
+        productList = new ArrayList<>();
     }
     
-    public void addProduct(Producto producto,String cantidad){
+    public void addProduct(Producto producto){
         try{
-            int cant = Integer.parseInt(cantidad);
-            if(productList.size() == 0){
-                productList.put(producto, cant);
+            if(productList.isEmpty()){
+                productList.add(producto);
             }else{
-                boolean added = false;
-                for (Map.Entry<Producto, Integer> entry : productList.entrySet()) {
-                   if(entry.getKey().getId() == producto.getId()){
-                       productList.remove(entry.getKey());
-                       productList.put(producto, entry.getValue()+cant);
-                       added = true;
-                   }
+                boolean alreadyExists = false;
+                for(Producto p : productList){
+                    if( p.getId() == producto.getId()){
+                        alreadyExists = true;
+                        break;
+                    }
                 }
-                if(!added){
-                    productList.put(producto, cant);
+                if(!alreadyExists){
+                    productList.add(producto);
                 }
             }
         }catch(Exception e){}
@@ -44,15 +41,15 @@ public class Carrito {
             if(productList.size() == 0){
                 return;
             }else{
-                for (Map.Entry<Producto, Integer> entry : productList.entrySet()) {
-                   if(entry.getKey().getId() == Integer.parseInt(idProducto)){
-                       productList.remove(entry.getKey());
-                   }
+                for(Producto p : productList){
+                    if(p.getId() == Integer.parseInt(idProducto)){
+                        productList.remove(p);
+                    }
                 }
             }
         }catch(Exception e){}
     }
-    public Map getContents(){
+    public List getContents(){
         return productList;
     }
         

@@ -1,3 +1,4 @@
+<%@page import="java.util.List"%>
 <%@page import="java.util.Map"%>
 <%@page import="modelo.Carrito"%>
 <%@page import="modelo.Pedido"%>
@@ -97,7 +98,6 @@
         <h1>Añadir producto al carrito</h1>
         <form action="FrontController">
             <input type="text" placeholder="id del producto" name="idproducto" value="" required>
-            <input type="text" placeholder="cantidad" name="cantidad" value="" required>
             <input type="hidden" name="command" value="AddToShoppingCartCommand">
             <input type="submit">
         </form>
@@ -135,15 +135,15 @@
 
         
         }%>
-        
-        <% Carrito l = (Carrito) request.getSession().getAttribute("carrito"); %>
-        <%if (l != null){%>
+        <% Carrito l = (Carrito) request.getSession().getAttribute("carrito"); 
+         List<Producto> productos=null;
+        %>
+        <%if (l != null){
+        productos = l.getContents();%>
         <p>El carrito contiene: <p><br>
-            <% Map<Producto,Integer> elements = l.getContents(); %>
-            <% for (Map.Entry<Producto, Integer> entry : elements.entrySet()) { %>
-                <% String name = entry.getKey().getNombre();%>
-                <%int cantidad = entry.getValue();%>
-                <p>Producto: <%=name%>, cantidad: <%=cantidad%><p>
+            <% for (Producto p : productos) { %>
+                <% String name = p.getNombre();%>
+                <p>Producto: <%=name%></p>
             <%}%>
         <%}%>
         
