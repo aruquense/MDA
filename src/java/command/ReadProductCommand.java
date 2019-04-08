@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import modelo.Producto;
+import modelo.Usuario;
 
 public class ReadProductCommand extends FrontCommand {     
 
@@ -22,7 +23,9 @@ public class ReadProductCommand extends FrontCommand {
         Double precio = product.getPrecio();
         String descripcion = product.getDescripcion();
         String img = product.getImg();
-        String nombre = product.getNombre();            
+        String nombre = product.getNombre();  
+        Usuario user =  handler.getUsuarioByID(idvendedor);
+        request.setAttribute("usuario", user);
         forward("/product.jsp?id="+id+"&idvendedor="+idvendedor+"&precio="+precio+"&descripcion="+descripcion+"&img="+img+"&nombre="+nombre);
     }
     

@@ -2,23 +2,36 @@ package modelo;
 
 public class Usuario {
     private Long id, nVentas, nVisitas;
-    private String nombre, correo, contrasena;
+    private String nombre, correo, contrasena,localizacion;
     private Double valoracion;
-    private int[] idpedidos;
+    private Integer[] idpedidos;
     private boolean espremium;
 
-    public Usuario(Long id, Long nVentas, Long nVisitas, String nombre, String correo, String contrasena, Double valoracion, int[] idpedidos, boolean espremium) {
+    public Usuario(Long id, Long nVentas, Long nVisitas,String localizacion, String nombre, String correo, String contrasena, Double valoracion, Integer[] idpedidos, int espremium) {
         this.id = id;
         this.nVentas = nVentas;
         this.nVisitas = nVisitas;
+        this.localizacion = localizacion;
         this.nombre = nombre;
         this.correo = correo;
         this.contrasena = contrasena;
         this.valoracion = valoracion;
         this.idpedidos = idpedidos;
-        this.espremium = espremium;
+        this.espremium = (espremium == 0);       
     }
 
+    public Usuario() {    
+    }
+
+    public String getLocalizacion() {
+        return localizacion;
+    }
+
+    public void setLocalizacion(String localizacion) {
+        this.localizacion = localizacion;
+    }
+
+    
     public Long getId() {
         return id;
     }
@@ -75,11 +88,11 @@ public class Usuario {
         this.valoracion = valoracion;
     }
 
-    public int[] getIdpedidos() {
+    public Integer[] getIdpedidos() {
         return idpedidos;
     }
 
-    public void setIdpedidos(int[] idpedidos) {
+    public void setIdpedidos(Integer[] idpedidos) {
         this.idpedidos = idpedidos;
     }
 

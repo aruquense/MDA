@@ -4,6 +4,7 @@
     Author     : sergio
 --%>
 
+<%@page import="modelo.Usuario"%>
 <%@page import="modelo.Producto"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -41,8 +42,12 @@
         </nav>
     </div>
     <!-- End: Navigation with Button -->
-    <%Producto producto = null;%>
-    <%producto = (Producto) request.getAttribute("product");%>
+    <%Producto producto = null;
+    producto = (Producto) request.getAttribute("product");
+    Usuario user = (Usuario) request.getAttribute("usuario");
+    String name = user.getNombre()+"&nbsp;";
+    
+    %>
     <div class="container">
         <!-- Start: NombreProducto -->
 
@@ -66,7 +71,7 @@
                     <h3 class="text-left" style="margin-top: 35px;">Vendedor:&nbsp;</h3>
                     <!-- End: EtiquetaPrecio -->
                     <!-- Start: Valor del Precio -->
-                    <p style="color: #56c6c6;margin-top: -34px;margin-left: 152px;font-weight: bold;">Pepito de los palotes&nbsp;<i class="fa fa-star float-none" style="margin-left: 42px;color: rgb(169,41,41);"></i><i class="fa fa-star float-none" style="margin-left: 3px;color: rgb(169,41,41);"></i><i class="fa fa-star float-none"
+                    <p style="color: #56c6c6;margin-top: -34px;margin-left: 152px;font-weight: bold;"><%=name%><i class="fa fa-star float-none" style="margin-left: 42px;color: rgb(169,41,41);"></i><i class="fa fa-star float-none" style="margin-left: 3px;color: rgb(169,41,41);"></i><i class="fa fa-star float-none"
                             style="margin-left: 3px;color: rgb(169,41,41);"></i><i class="fa fa-star float-none" style="margin-left: 3px;color: rgb(169,41,41);"></i><i class="fa fa-star float-none" style="margin-left: 3px;color: rgb(152,151,151);"></i></p>
                     <!-- End: Valor del Precio -->
                     <!-- Start: EtiquetaPrecio -->
