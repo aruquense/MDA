@@ -22,7 +22,7 @@ public class HandlerBDD {
         try{     
             Class.forName("org.postgresql.Driver");      
             System.out.println("Tratando de conectar");
-            this.conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/mdaBDD","postgres","1234");
+            this.conn = DriverManager.getConnection("jdbc:postgresql://localhost:5433/mdaBDD","postgres","1234");
             System.out.println("HEMOS CONECTADO");
         }catch(ClassNotFoundException |SQLException e){
             Logger.getLogger(HandlerBDD.class.getName()).log(Level.SEVERE, null, e);
@@ -311,6 +311,35 @@ public class HandlerBDD {
         }
         
         return user; 
+    }
+
+void actualizarUsuario(int idUser, String nombre, String correo, String contrasena, String contrasena2, 
+            String localizacion) {
+        conectarBD();
+        
+        String sql2 ="UPDATE public.\"Usuario\"	SET nombre=?, "
+                + "correo=?, "
+                + "contrasena=?, "
+                + "localizacion=?, "
+                +"	WHERE ID="+idUser;
+        String sql ="UPDATE public.\"Usuario\" SET nombre=?, correo=?, contrasena=?, localizacion=? WHERE ID="+idUser+"";
+        PreparedStatement enrollItmt;
+        try {
+            enrollItmt = this.conn.prepareStatement(sql);
+            enrollItmt.setString(1, nombre);
+            enrollItmt.setString(2, correo);
+            if (contrasena.equals(contrasena2)){
+                enrollItmt.setString(3, contrasena);
+            }else{
+                throw new NullPointerException("WrongPassword");
+            }
+            
+            enrollItmt.setString(4, localizacion);
+            enrollItmt.execute();
+        } catch (SQLException ex) {
+            Logger.getLogger(HandlerBDD.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        cerrarBD(conn);
     }
 
 }

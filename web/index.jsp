@@ -21,9 +21,11 @@
         </form>        
         <h1>Update User user</h1>
         <form action="FrontController" method="POST" enctype="multipart/form-data" >
+            <input type="text" placeholder="id" name="idUser" value="" required>
             <input type="text" placeholder="nombre" name="nombre" value="" required>
             <input type="text" placeholder="correo" name="correo" value="" required>
             <input type="password" placeholder="contrasena" name="contrasena" value="" required>
+            <input type="password" placeholder="Repite contrasena" name="contrasena2" value="" required>
             <input type="text" placeholder="localizacion" name="localizacion" value="" required>                      
             <input type="hidden" name="command" value="UpdateUserCommand">    
             <input type="submit">
