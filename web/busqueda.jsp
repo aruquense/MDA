@@ -36,7 +36,10 @@
         <div>
             <div class="container">
                 <!-- Start: NombreProducto -->
-                <h1 style="margin-top: 0px;margin-left: 34px;">Resultados de la búsqueda 'nombre búsqueda'</h1>
+                <%
+                    String busqueda = request.getParameter("busqueda");
+                %>
+                <h1 style="margin-top: 0px;margin-left: 34px;">Resultados de la búsqueda '<%=busqueda%>'</h1>
                 <!-- End: NombreProducto -->
                 <div class="row" style="margin-top: 25px;margin-bottom: 41px;">
                     <div class="col-md-6"></div>

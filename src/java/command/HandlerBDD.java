@@ -22,7 +22,7 @@ public class HandlerBDD {
         try{     
             Class.forName("org.postgresql.Driver");      
             System.out.println("Tratando de conectar");
-            this.conn = DriverManager.getConnection("jdbc:postgresql://localhost:5433/mdaBDD","postgres","1234");
+            this.conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres","postgres","1234");
             System.out.println("HEMOS CONECTADO");
         }catch(ClassNotFoundException |SQLException e){
             Logger.getLogger(HandlerBDD.class.getName()).log(Level.SEVERE, null, e);
@@ -69,10 +69,10 @@ public class HandlerBDD {
         }
         return -1;
     }
-    public void añadirProducto(int idvendedor, String nombre, double precio, String descripcion, String imagen){
+    public void añadirProducto(int idvendedor, String nombre, double precio, String descripcion, String imagen){        
+        long idProducto = encontrarNúmeroProductos()+1;
         conectarBD();        
-        
-        String sql = "INSERT INTO \"public\".\"Producto\"(idvendedor,nombre,precio,descripcion,imagen) values("+idvendedor+",\'"+nombre+"\',"+precio+",\'"+descripcion+"\',\'"+imagen+"\')";        
+        String sql = "INSERT INTO \"public\".\"Producto\"(id,idvendedor,nombre,precio,descripcion,imagen) values("+idProducto+","+idvendedor+",\'"+nombre+"\',"+precio+",\'"+descripcion+"\',\'"+imagen+"\')";        
         PreparedStatement enrollItmt;
         try {
             enrollItmt = this.conn.prepareStatement(sql);
@@ -114,7 +114,7 @@ public class HandlerBDD {
         cerrarBD(conn);
         
     }
-        Producto leerProducto(int idProducto) throws SQLException {
+        public Producto leerProducto(int idProducto) throws SQLException {
         conectarBD();        
         
         String sql = "SELECT * FROM \"public\".\"Producto\" WHERE id="+idProducto+"";        
@@ -338,10 +338,6 @@ public class HandlerBDD {
                 int nventas = Math.toIntExact(rs.getLong("nventas"));
                 int nvisitas = Math.toIntExact(rs.getLong("nvisitas"));
                 long id = rs.getLong("id");
-                long nvaloraciones =0;
-                if (rs.getLong("nvaloraciones") > 0){
-                    nvaloraciones = rs.getLong("nvaloraciones");
-                }
                 user = new Usuario(id, nventas, nvisitas,localizacion, nombre, correo, contrasena, valoracion, idpedidos,esPremium);
                 System.out.println("SE HA CREADO EL USUARIO");
             }

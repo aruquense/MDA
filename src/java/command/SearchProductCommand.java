@@ -10,7 +10,10 @@ public class SearchProductCommand extends FrontCommand{
         HandlerBDD handler = new HandlerBDD();
         ArrayList<Producto> searchList = handler.searchProduct(request.getParameter("producto"));           
         request.setAttribute("searchList", searchList);
-        forward("/busqueda.jsp");  
+        String busqueda;
+        if(request.getParameter("producto")==null)busqueda = " ";
+        else busqueda = request.getParameter("producto");
+        forward("/busqueda.jsp?busqueda="+busqueda);  
     }
     
 }
