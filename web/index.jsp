@@ -12,7 +12,18 @@
         <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
         <title>Sprint 0 MDA</title>
     </head>
-    <body>    
+    <body>
+        <h1>Pay</h1>
+        <form action="FrontController" method="POST" enctype="multipart/form-data" >    
+            <input type="hidden" name="command" value="PayCommand">    
+            <input type="submit" value="PayCommand">
+        </form> 
+        <h1>TEST MarkProductAsSold</h1>
+        <form action="FrontController" method="POST" enctype="multipart/form-data" >
+            <input type="text" placeholder="idproducto" name="idproducto" value="" required>         
+            <input type="hidden" name="command" value="TestMarkProductAsSold">    
+            <input type="submit">
+        </form>        
         <h1>View user</h1>
         <form action="FrontController" method="POST" enctype="multipart/form-data" >
             <input type="text" placeholder="id" name="idUser" value="" required>         

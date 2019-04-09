@@ -52,5 +52,9 @@ public class Carrito {
     public List getContents(){
         return productList;
     }
+
+    public void clear() {
+        productList.clear();
+    }
         
 }

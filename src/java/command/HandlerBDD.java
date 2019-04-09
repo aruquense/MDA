@@ -317,11 +317,7 @@ void actualizarUsuario(int idUser, String nombre, String correo, String contrase
             String localizacion) {
         conectarBD();
         
-        String sql2 ="UPDATE public.\"Usuario\"	SET nombre=?, "
-                + "correo=?, "
-                + "contrasena=?, "
-                + "localizacion=?, "
-                +"	WHERE ID="+idUser;
+
         String sql ="UPDATE public.\"Usuario\" SET nombre=?, correo=?, contrasena=?, localizacion=? WHERE ID="+idUser+"";
         PreparedStatement enrollItmt;
         try {
@@ -342,5 +338,23 @@ void actualizarUsuario(int idUser, String nombre, String correo, String contrase
         cerrarBD(conn);
     }
 
+    void deleteProductFromCustomer(Long id, Long idvendedor) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+    }
+
+    void markProductSoldFromADB(Long id) throws SQLException {conectarBD();        
+        
+        String sql = "UPDATE \"public\".\"Producto\" SET idvendedor = ?  WHERE id="+id+"";
+        PreparedStatement enrollItmt;
+        try {
+            enrollItmt = this.conn.prepareStatement(sql);
+            enrollItmt.setInt(1, 0);
+            enrollItmt.execute();
+        } catch (SQLException ex) {
+            Logger.getLogger(HandlerBDD.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        cerrarBD(conn);
+    }
 }
 
