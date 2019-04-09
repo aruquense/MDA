@@ -52,6 +52,23 @@ public class HandlerBDD {
         }
         return -1;
     }
+    
+    public int encontrarNumeroUsuarios(){
+        try {
+            conectarBD();
+            String sql ="SELECT COUNT(*) AS total FROM \"public\".\"Usuario\"";
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
+            while(rs.next()){            
+                int total = rs.getInt("total");
+                cerrarBD(conn); 
+                return total;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(HandlerBDD.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return -1;
+    }
     public void añadirProducto(int idvendedor, String nombre, double precio, String descripcion, String imagen){
         conectarBD();        
         
@@ -166,19 +183,41 @@ public class HandlerBDD {
         return orderList;
     }    
 
-    void registrarUsuario(String idnombre, String idcorreo, String idcontrasena, String idlocalizacion) {conectarBD();        
-            
-        
-        String sql = "INSERT INTO \"public\".\"Usuario\"(nombre,correo,contrasena,localizacion,nventas,nvisitas) VALUES ('"+idnombre+"', '"+idcorreo+"','"+idcontrasena+"', '"+idlocalizacion+"',0,0);";        
-        PreparedStatement enrollItmt;
-        try {
-            enrollItmt = this.conn.prepareStatement(sql);
-            enrollItmt.execute();
-        } catch (SQLException ex) {
-            Logger.getLogger(HandlerBDD.class.getName()).log(Level.SEVERE, null, ex);
+    
+
+    void registrarUsuario(String idnombre, String idcorreo, String idcontrasena, String idlocalizacion) {            
+        int id = encontrarNumeroUsuarios();        
+        if(!userExists(idnombre)){                    
+            conectarBD();
+            String sql = "INSERT INTO \"public\".\"Usuario\"(id,nombre,espremium,correo,contrasena,localizacion,valoracion,nventas,nvisitas) VALUES ("+id+",'"+idnombre+"',0, '"+idcorreo+"','"+idcontrasena+"', '"+idlocalizacion+"',0,0,0);";        
+            PreparedStatement enrollItmt;
+            try {
+                enrollItmt = this.conn.prepareStatement(sql);
+                enrollItmt.execute();
+            } catch (SQLException ex) {
+                Logger.getLogger(HandlerBDD.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            cerrarBD(conn);
+        }else{
+            System.out.println("Este usuario ya existe");
         }
-        cerrarBD(conn);
     }
+    public boolean userExists(String nameUser){
+        conectarBD();        
+        String sql = "SELECT COUNT(*) AS total FROM \"public\".\"Usuario\" WHERE nombre='"+nameUser+"'";        
+        Statement stmt;        
+        try {
+            stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
+            while (rs.next()) {
+                int total = rs.getInt("total");                
+                if(total >0)return true;
+
+            }
+        }catch(SQLException e){}
+        return false;       
+    }
+
 
     void puntuarUsuario(int idUsuario, int puntuacion) {
         conectarBD();
@@ -245,7 +284,7 @@ public class HandlerBDD {
                 int nventas = Math.toIntExact(rs.getLong("nventas"));
                 int nvisitas = Math.toIntExact(rs.getLong("nvisitas"));
                 long id = rs.getLong("id");
-                user = new Usuario(id, nventas, nvisitas,localizacion, nombre, correo, contrasena, valoracion, idpedidos,esPremium,0);
+                user = new Usuario(id, nventas, nvisitas,localizacion, nombre, correo, contrasena, valoracion, idpedidos,esPremium);
 
             }
         }catch(SQLException e){
@@ -303,7 +342,7 @@ public class HandlerBDD {
                 if (rs.getLong("nvaloraciones") > 0){
                     nvaloraciones = rs.getLong("nvaloraciones");
                 }
-                user = new Usuario(id, nventas, nvisitas,localizacion, nombre, correo, contrasena, valoracion, idpedidos,esPremium, (int) nvaloraciones);
+                user = new Usuario(id, nventas, nvisitas,localizacion, nombre, correo, contrasena, valoracion, idpedidos,esPremium);
                 System.out.println("SE HA CREADO EL USUARIO");
             }
         } catch (SQLException ex) {
@@ -311,7 +350,31 @@ public class HandlerBDD {
         }
         
         return user; 
-    }
+    }           
+    public ArrayList<Pedido> obtenerVentas(int idUsuario){
+        conectarBD();
+        ArrayList<Pedido> orderList = new ArrayList<>();
+        String sql = "SELECT * FROM \"public\".\"Pedido\" WHERE idvendedor="+idUsuario;        
+        Statement stmt;
+        try {
+            stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
+            while (rs.next()) {
+                Long id = rs.getLong("id");
+                Long idcomprador = rs.getLong("idcomprador");
+                Long idvendedor = rs.getLong("idvendedor");                
+                String estado = rs.getString("estado");                                       
+                Array productos = rs.getArray("idproductos");            
+                Integer[] idProductos = (Integer[])productos.getArray();
+                Pedido pedido = new Pedido(id, idcomprador, idvendedor, estado, idProductos);
+                orderList.add(pedido);                
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(HandlerBDD.class.getName()).log(Level.SEVERE, null, ex);
+        }        
+        cerrarBD(conn);
+        return orderList;
+    }    
 
 void actualizarUsuario(int idUser, String nombre, String correo, String contrasena, String contrasena2, 
             String localizacion) {

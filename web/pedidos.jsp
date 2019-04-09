@@ -4,6 +4,10 @@
     Author     : Sergio
 --%>
 
+<%@page import="modelo.Producto"%>
+<%@page import="command.HandlerBDD"%>
+<%@page import="modelo.Pedido"%>
+<%@page import="java.util.ArrayList"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -24,21 +28,7 @@
 
 <body>
     <!-- Start: Navigation with Button -->
-    <div>
-        <nav class="navbar navbar-light navbar-expand-md navigation-clean-button">
-            <div class="container"><a class="navbar-brand" href="#">CompraVENTA</a><button class="navbar-toggler" data-toggle="collapse" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
-                <div class="collapse navbar-collapse"
-                    id="navcol-1">
-                    <ul class="nav navbar-nav mr-auto">
-                        <li class="nav-item" role="presentation"><a class="nav-link active" href="#">First Item</a></li>
-                        <li class="nav-item" role="presentation"><a class="nav-link" href="#">Second Item</a></li>
-                        <li class="dropdown nav-item"><a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false" href="#">Dropdown </a>
-                            <div class="dropdown-menu" role="menu"><a class="dropdown-item" role="presentation" href="#">First Item</a><a class="dropdown-item" role="presentation" href="#">Second Item</a><a class="dropdown-item" role="presentation" href="#">Third Item</a></div>
-                        </li>
-                    </ul><span class="navbar-text actions"> <a href="#" class="login">Log In</a><a class="btn btn-light action-button" role="button" href="#">Sign Up</a></span></div>
-            </div>
-        </nav>
-    </div>
+    <%@include file="navbar.jsp" %>
     <!-- End: Navigation with Button -->
     <!-- Start: 1 Row 2 Columns -->
     <div>
@@ -68,19 +58,39 @@
                         <th style="font-size: 20px;width: 151px;">Estado de envío</th>
                         <th></th>
                     </tr>
-                </thead>
+                </thead>                
                 <tbody>
+                    <%
+                    HandlerBDD handler = new HandlerBDD();
+                    if(request.getAttribute("orderList")!=null){
+                        ArrayList<Pedido> list = (ArrayList<Pedido>) request.getAttribute("orderList");
+                        for (Pedido order : list) {                                                                
+                            String stateOrder =order.getEstado();
+                            for(Integer idProd: order.getIdproductos()){
+                                Producto prod = handler.leerProducto(idProd);                                                                                                                                                            
+                                String nameProduct = prod.getNombre();
+                                Double precio = prod.getPrecio();
+                                String ruta = prod.getImg();
+                                Usuario seller = handler.getUsuarioByID(prod.getIdvendedor());
+                                Usuario myUser = handler.getUsuarioByID(order.getIdcomprador());
+                                //long idSeller = seller.getId();
+                                String correoSeller = seller.getCorreo();
+                                String dirEnvio = myUser.getLocalizacion();                                
+                        %>                              
                     <tr>
-                        <td><img src="assets/img/61yI7vWa83L._SL1000_.jpg" style="width: 162px;margin-right: -17px;margin-left: -34px;"></td>
-                        <td style="width: 300px;padding-top: 21px;">Amazon Echo (Esto es un link)</td>
-                        <td style="width: 190px;margin-top: 0px;padding-top: 21px;"><strong>74,99€&nbsp;</strong><br><br></td>
-                        <td>c/ Pepe de los palotes Nº 2, 35019. Las Palmas de Gran Canaria. Teléfono: 665324521</td>
-                        <td style="color: rgb(3,156,0);font-weight: bold;">Enviado</td>
+                        <td><img src="<%=ruta%>" style="width: 162px;margin-right: -17px;margin-left: -34px;"></td>
+                        <td style="width: 300px;padding-top: 21px;"><%=nameProduct%></td>
+                        <td style="width: 190px;margin-top: 0px;padding-top: 21px;"><strong><%=precio%>€&nbsp;</strong><br><br></td>
+                        <td><%=dirEnvio%>. Correo del vendedor: <%=correoSeller%></td>
+                        <td style="color: rgb(3,156,0);font-weight: bold;"><%=stateOrder%></td>
                         <td style="width: 248px;height: 134px;"><button class="btn btn-primary border rounded" type="button" style="margin-right: 11px;margin-left: 74px;width: 228px;background-color: rgb(85,85,85);height: 42px;margin-top: 0px;margin-bottom: 11px;"><i class="fas fa-question-circle float-left" style="padding-right: 9px;margin-right: -6px;margin-left: -2px;margin-top: 3px;"></i>Contactar con vendedor</button>
                             <button
                                 class="btn btn-primary border rounded" type="button" style="margin-right: 11px;margin-left: 74px;width: 228px;background-color: rgb(169,41,41);height: 42px;margin-top: 0px;"><i class="fa fa-star float-left" style="padding-right: 9px;margin-right: -25px;margin-left: 15px;margin-top: 4px;"></i>Valorar vendedor</button>
                         </td>
                     </tr>
+                    <%    }
+                    }        
+                }%>                
                 </tbody>
             </table>
         </div>
@@ -102,17 +112,36 @@
                     </tr>
                 </thead>
                 <tbody>
+                    <%                    
+                    if(request.getAttribute("orderSell")!=null){
+                        ArrayList<Pedido> list = (ArrayList<Pedido>) request.getAttribute("orderSell");
+                        for (Pedido order : list) {                                                                
+                            String stateOrder = order.getEstado();
+                            for(Integer idProd: order.getIdproductos()){
+                                Producto prod = handler.leerProducto(idProd);                                                                                                                                                            
+                                String nameProduct = prod.getNombre();
+                                Double precio = prod.getPrecio();
+                                String ruta = prod.getImg();
+                                Usuario seller = handler.getUsuarioByID(prod.getIdvendedor());
+                                Usuario myUser = handler.getUsuarioByID(order.getIdcomprador());
+                                //long idSeller = seller.getId();
+                                String correoSeller = seller.getCorreo();
+                                String dirEnvio = myUser.getLocalizacion();                                
+                        %>                      
                     <tr>
-                        <td><img src="assets/img/61yI7vWa83L._SL1000_.jpg" style="width: 162px;margin-right: -17px;margin-left: -34px;"></td>
-                        <td style="width: 300px;padding-top: 21px;">Amazon Echo (Esto es un link)</td>
-                        <td style="width: 190px;margin-top: 0px;padding-top: 21px;"><strong>74,99€&nbsp;</strong><br><br></td>
-                        <td>c/ Pepe de los palotes Nº 2, 35019. Las Palmas de Gran Canaria. Teléfono: 665324521</td>
-                        <td style="color: rgb(3,156,0);font-weight: bold;">Enviado</td>
+                        <td><img src="<%=ruta%>" style="width: 162px;margin-right: -17px;margin-left: -34px;"></td>
+                        <td style="width: 300px;padding-top: 21px;"><%=nameProduct%></td>
+                        <td style="width: 190px;margin-top: 0px;padding-top: 21px;"><strong><%=precio%>€&nbsp;</strong><br><br></td>
+                        <td><%=dirEnvio%>. Correo del vendedor: <%=correoSeller%></td>
+                        <td style="color: rgb(3,156,0);font-weight: bold;"><%=stateOrder%></td>
                         <td style="width: 248px;height: 134px;"><button class="btn btn-primary border rounded" type="button" style="margin-right: 11px;margin-left: 74px;width: 228px;background-color: rgb(85,85,85);height: 42px;margin-top: 0px;margin-bottom: 11px;"><i class="fas fa-question-circle float-left" style="padding-right: 9px;margin-right: -6px;margin-left: -2px;margin-top: 3px;"></i>Contactar con comprador</button>
                             <button
                                 class="btn btn-primary border rounded" type="button" style="margin-right: 11px;margin-left: 74px;width: 228px;background-color: rgb(169,41,41);height: 42px;margin-top: 0px;"><i class="fa fa-exclamation-circle float-left" style="padding-right: 0px;margin-right: -92px;margin-left: 24px;margin-top: 4px;margin-bottom: 0px;"></i>Ver incidencias</button>
                         </td>
                     </tr>
+                    <%    }
+                    }        
+                }%>                
                 </tbody>
             </table>
         </div>

@@ -27,42 +27,8 @@
 
     <body>
         <!-- Start: Navigation with Button -->
-        <div>
-            <nav class="navbar navbar-light navbar-expand-md navigation-clean-button">
-                <div class="container"><a class="navbar-brand" href="#">CompraVENTA</a><button class="navbar-toggler" data-toggle="collapse" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
-                    <div class="collapse navbar-collapse"
-                         id="navcol-1">
-                        <ul class="nav navbar-nav mr-auto">
-                            <%
-                                Usuario user = (Usuario) session.getAttribute("usuario");
-                                if(user!=null){
-                                    long idUser = user.getId();
-                            %>
-                            <form action="FrontContoller">
-                                <input type="hidden" name="idUser" value="<%=idUser%>">
-                                <input type="hidden" name="command" value="GetOrderCommand">                               
-                                <li class="nav-item" role="presentation"><a class="nav-link active" type="submit" href="#">Mis pedidos</a></li>
-                            </form>
-                            <li class="nav-item" role="presentation"><a class="nav-link" href="/addProduct.jsp">Añadir una venta</a></li>                            
-                            <%}%>
-                            <li class="nav-item" role="presentation">
-                                <div class="container h-100">
-                                    <div class="d-flex justify-content-center h-100">
-                                        <form action="FrontController">
-                                            <div class="searchbar">
-                                                <input type="hidden" name="command" value="SearchProductCommand">
-                                                <input class="search_input" type="text" name="producto" placeholder="Busca un producto...">
-                                                <a href="#" class="search_icon"><i class="fas fa-search"></i></a>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-
-                            </li>
-                        </ul><span class="navbar-text actions"> <a href="inicioSesionBasic.jsp" class="login">Log In</a><a class="btn btn-light action-button" role="button" href="#">Sign Up</a></span></div>
-                </div>
-            </nav>
-        </div>
+        <%@include file="navbar.jsp" %>
+        
         <!-- End: Navigation with Button -->
         <div class="carousel slide" data-ride="carousel" id="carousel-1">
             <div class="carousel-inner" role="listbox">

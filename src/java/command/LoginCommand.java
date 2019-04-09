@@ -5,7 +5,6 @@
  */
 package command;
 
-import javax.servlet.http.HttpSession;
 import modelo.Usuario;
 
 /**
@@ -16,15 +15,14 @@ public class LoginCommand extends FrontCommand{
 
     @Override
     public void process() {
-        HandlerBDD bdd = new HandlerBDD();
-        HttpSession sesion = request.getSession(true);
+        HandlerBDD bdd = new HandlerBDD();                
         String nombre = request.getParameter("userName");
-        String passwd = request.getParameter("password");
+        String passwd = request.getParameter("password");        
         Usuario user = bdd.login(nombre, passwd); 
-        if (user != null){
-            request.setAttribute("usuario", user);
+        if (user != null){            
+            session.setAttribute("usuario", user);            
         }
-        forward("/inicioSesionBasic.jsp?nombre="+user.getNombre());
+        forward("/index2.jsp");
     }
     
 }

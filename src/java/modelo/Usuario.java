@@ -8,7 +8,7 @@ public class Usuario {
     private Integer[] idpedidos;
     private boolean espremium;
 
-    public Usuario(Long id, int nVentas, int nVisitas,String localizacion, String nombre, String correo, String contrasena, Double valoracion, Integer[] idpedidos, int espremium, int nValoraciones) {
+    public Usuario(Long id, int nVentas, int nVisitas,String localizacion, String nombre, String correo, String contrasena, Double valoracion, Integer[] idpedidos, int espremium) {
         this.id = id;
         this.nVentas = nVentas;
         this.nVisitas = nVisitas;
@@ -18,8 +18,7 @@ public class Usuario {
         this.contrasena = contrasena;
         this.valoracion = valoracion;
         this.idpedidos = idpedidos;
-        this.espremium = (espremium == 0);  
-        this.nValoraciones=nValoraciones;
+        this.espremium = (espremium == 0);          
     }
 
     public Usuario() {    

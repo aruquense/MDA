@@ -24,15 +24,15 @@ public class FrontController extends HttpServlet {
     
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws ServletException, IOException {        
         FrontCommand command = getCommand(request);
-        command.init(getServletContext(), request, response);
+        command.init(getServletContext(), request, response,request.getSession(true));
         command.process();
 
     }
 
     private FrontCommand getCommand(HttpServletRequest req){
-        try {
+        try {            
             FrontCommand f= (FrontCommand) getCommandClass(req).newInstance();
             return f;
         }catch (InstantiationException | IllegalAccessException e) {            
@@ -49,7 +49,7 @@ public class FrontController extends HttpServlet {
         }
         catch(ClassNotFoundException e) {
             result = UnknownCommand.class;
-        }
+        }        
         return result;
     }
     
