@@ -59,7 +59,7 @@
                                 </div>
 
                             </li>
-                        </ul><span class="navbar-text actions"> <a href="#" class="login">Log In</a><a class="btn btn-light action-button" role="button" href="#">Sign Up</a></span></div>
+                        </ul><span class="navbar-text actions"> <a href="inicioSesionBasic.jsp" class="login">Log In</a><a class="btn btn-light action-button" role="button" href="#">Sign Up</a></span></div>
                 </div>
             </nav>
         </div>

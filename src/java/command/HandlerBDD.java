@@ -22,7 +22,7 @@ public class HandlerBDD {
         try{     
             Class.forName("org.postgresql.Driver");      
             System.out.println("Tratando de conectar");
-            this.conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/mdaBDD3","postgres","1234");
+            this.conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/mdaBDD","postgres","1234");
             System.out.println("HEMOS CONECTADO");
         }catch(ClassNotFoundException |SQLException e){
             Logger.getLogger(HandlerBDD.class.getName()).log(Level.SEVERE, null, e);
@@ -270,6 +270,47 @@ public class HandlerBDD {
         }
         cerrarBD(conn);
 
+    }
+    
+        Usuario login(String name, String passwd){
+        conectarBD();
+        Usuario user =null;
+        String sql = "SELECT * FROM public.\"Usuario\" WHERE nombre=" + "'"+name+ "'"+ " AND contrasena=" + "'"+passwd+"'"; 
+         Statement stmt;
+         /*
+         (Long id, int nVentas, int nVisitas,String localizacion, 
+         String nombre, String correo, String contrasena, 
+         Double valoracion, Integer[] idpedidos, int espremium, int nValoraciones)
+         */
+        try {
+            stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
+            if (rs.next()){
+                String nombre = rs.getString("nombre");
+                int esPremium = rs.getInt("espremium");
+                String correo = rs.getString("correo");
+                String contrasena = rs.getString("contrasena");
+                String localizacion = rs.getString("localizacion");
+                Array productos = rs.getArray("idpedidos");            
+                Integer[] idpedidos = new Integer[]{};
+                if(productos != null)
+                    idpedidos = (Integer[])productos.getArray();                
+                Double valoracion = rs.getDouble("valoracion");
+                int nventas = Math.toIntExact(rs.getLong("nventas"));
+                int nvisitas = Math.toIntExact(rs.getLong("nvisitas"));
+                long id = rs.getLong("id");
+                long nvaloraciones =0;
+                if (rs.getLong("nvaloraciones") > 0){
+                    nvaloraciones = rs.getLong("nvaloraciones");
+                }
+                user = new Usuario(id, nventas, nvisitas,localizacion, nombre, correo, contrasena, valoracion, idpedidos,esPremium, (int) nvaloraciones);
+                System.out.println("SE HA CREADO EL USUARIO");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(HandlerBDD.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return user; 
     }
 
 }
