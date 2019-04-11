@@ -12,7 +12,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
         <title>Sprint 0 MDA</title>
     </head>
-    <body>
+    <body>        
         <h1>Pay</h1>
         <form action="FrontController" method="POST" enctype="multipart/form-data" >    
             <input type="hidden" name="command" value="PayCommand">    
@@ -56,7 +56,8 @@
             <input type="text" placeholder="localizacion" name="localizacion" value="" required>                      
             <input type="hidden" name="command" value="RegisterUserCommand">    
             <input type="submit">
-        </form>     
+        </form>             
+ 
         <h1>Inserción de producto</h1>
         <form action="FrontController" method="POST" enctype="multipart/form-data" >
             <input type="text" placeholder="id del vendedor" name="idvendedor" value="" required>

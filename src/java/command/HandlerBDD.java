@@ -22,7 +22,7 @@ public class HandlerBDD {
         try{     
             Class.forName("org.postgresql.Driver");      
             System.out.println("Tratando de conectar");
-            this.conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres","postgres","1234");
+            this.conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/mdaBDD","postgres","1234");
             System.out.println("HEMOS CONECTADO");
         }catch(ClassNotFoundException |SQLException e){
             Logger.getLogger(HandlerBDD.class.getName()).log(Level.SEVERE, null, e);
@@ -72,7 +72,7 @@ public class HandlerBDD {
     public void añadirProducto(int idvendedor, String nombre, double precio, String descripcion, String imagen){        
         long idProducto = encontrarNúmeroProductos()+1;
         conectarBD();        
-        String sql = "INSERT INTO \"public\".\"Producto\"(id,idvendedor,nombre,precio,descripcion,imagen) values("+idProducto+","+idvendedor+",\'"+nombre+"\',"+precio+",\'"+descripcion+"\',\'"+imagen+"\')";        
+        String sql = "INSERT INTO \"public\".\"Producto\"(id,idvendedor,nombre,precio,descripcion,imagen,vendido) values("+idProducto+","+idvendedor+",\'"+nombre+"\',"+precio+",\'"+descripcion+"\',\'"+imagen+"\',\'"+0+"\')";        
         PreparedStatement enrollItmt;
         try {
             enrollItmt = this.conn.prepareStatement(sql);
@@ -249,7 +249,6 @@ public class HandlerBDD {
     private void puntuarUsuarioUpdate(int idUsuario, Integer valoracion, Integer nvaloraciones) {
         conectarBD();        
         
-        String sql2 = "UPDATE \"public\".\"Producto\" SET nombre = ? ,precio = ? ,descripcion = ?, imagen = ? WHERE id=";
         String sql ="UPDATE public.\"Usuario\" SET valoracion=?, nvaloraciones=? WHERE ID="+idUsuario+"";
         PreparedStatement enrollItmt;
         try {
@@ -293,9 +292,6 @@ public class HandlerBDD {
         
         
         
-    }
-    void updateUser(String nombre, String correo, String contrasena, String localizacion) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     void updateNVisitas(int idUser, int nvisitas) { String sql ="UPDATE public.\"Usuario\" SET nvisitas=? WHERE ID="+idUser;
@@ -397,18 +393,35 @@ void actualizarUsuario(int idUser, String nombre, String correo, String contrase
         cerrarBD(conn);
     }
 
-    void deleteProductFromCustomer(Long id, Long idvendedor) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        
-    }
 
     void markProductSoldFromADB(Long id) throws SQLException {conectarBD();        
         
-        String sql = "UPDATE \"public\".\"Producto\" SET idvendedor = ?  WHERE id="+id+"";
+        String sql = "UPDATE \"public\".\"Producto\" SET vendido = ?  WHERE id="+id+"";
         PreparedStatement enrollItmt;
         try {
             enrollItmt = this.conn.prepareStatement(sql);
-            enrollItmt.setInt(1, 0);
+            int vendido =1;
+            enrollItmt.setInt(1, vendido);
+            enrollItmt.execute();
+        } catch (SQLException ex) {
+            Logger.getLogger(HandlerBDD.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        cerrarBD(conn);
+    }
+
+    void addOrderToBDD(int idcomprador, int idVendedor, ArrayList<Producto> order) {
+        conectarBD();
+        ArrayList<Integer> arrayIdProducts = new ArrayList<Integer>();
+        for (Producto temp : order) {
+	    arrayIdProducts.add(Math.toIntExact(temp.getId()));
+	}
+        String sql = "INSERT INTO public.\"Pedido\"(\n" +
+"	idcomprador, idvendedor, estado, idproductos)\n" +
+"	VALUES ("+idcomprador+", "+idVendedor+", 'en curso', "+arrayIdProducts+");";
+        PreparedStatement enrollItmt;
+       
+        try {
+            enrollItmt = this.conn.prepareStatement(sql);
             enrollItmt.execute();
         } catch (SQLException ex) {
             Logger.getLogger(HandlerBDD.class.getName()).log(Level.SEVERE, null, ex);

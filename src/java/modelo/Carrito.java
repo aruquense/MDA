@@ -52,6 +52,23 @@ public class Carrito {
     public List getContents(){
         return productList;
     }
+    
+    public List getContentsSeller(int id){
+        List<Producto> ProductosVendedor= new ArrayList<>();
+        try{
+            if(productList.size() == 0){
+                return ProductosVendedor;
+            }else{
+                for(Producto p : productList){
+                    if(p.getIdvendedor()==id){
+                        ProductosVendedor.add(p);
+                    }
+                }
+                
+            }
+        }catch(Exception e){}
+                return ProductosVendedor;
+    }
 
     public void clear() {
         productList.clear();

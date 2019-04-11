@@ -32,8 +32,10 @@ public class AddProductCommand extends FrontCommand {
         Part part = (Part) (Part) request.getPart("file");         
                         //new File("Ruta de la carpeta de cada miembro imgs en Netbeans")./imgs
                         
-        File uploads = new File("J:\\Users\\Default\\Documents\\NetBeansProjects\\MDA\\web\\imgs");
-        //File uploads = new File("C:\\Users\\aru\\Documents\\GitHub\\MDA\\web\\imgs");
+        //File uploads = new File("J:\\Users\\Default\\Documents\\NetBeansProjects\\MDA\\web\\imgs");
+        File uploads = new File("C:\\Users\\Aru\\Documents\\GitHub\\MDA\\web\\imgs");
+        
+                
         int tam = handler.encontrarNúmeroProductos()+1;
         File file = new File(uploads, "img"+tam+".jpg");
         try (InputStream input = part.getInputStream()) {
