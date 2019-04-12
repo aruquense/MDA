@@ -12,7 +12,8 @@
         <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
         <title>Sprint 0 MDA</title>
     </head>
-    <body>        
+    <body>  
+        <a href="index2.jsp">index2</a>
         <h1>Pay</h1>
         <form action="FrontController" method="POST" enctype="multipart/form-data" >    
             <input type="hidden" name="command" value="PayCommand">    

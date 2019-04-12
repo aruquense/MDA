@@ -1,13 +1,17 @@
 package command;
 
+import static java.sql.DriverManager.println;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.http.HttpSession;
 import modelo.Carrito;
 import modelo.Producto;
+import modelo.Usuario;
 
 
 public class PayCommand extends FrontCommand {    
@@ -17,7 +21,7 @@ public class PayCommand extends FrontCommand {
         try {
             MarkProductsAsSold();
             AddProductsToNewOrder();
-            forward("/myorder.jsp");
+            forward("/index.jsp");
             
         } catch (SQLException ex) {
             Logger.getLogger(PayCommand.class.getName()).log(Level.SEVERE, null, ex);
@@ -27,23 +31,35 @@ public class PayCommand extends FrontCommand {
 
     private void AddProductsToNewOrder() {
         HttpSession sesion = request.getSession(true);
+ 
         Carrito carrito =(Carrito) sesion.getAttribute("carrito");
         if(carrito == null){
             carrito = new Carrito();
             carrito.initialize();
             sesion.setAttribute("carrito",carrito);
+        }        
+        Usuario user =(Usuario) sesion.getAttribute("user");
+        if(user == null){
+            user = new Usuario();
+            sesion.setAttribute("user",user);
         }
+           
         
-        ArrayList<Producto> productosDelCarrito = (ArrayList<Producto>) carrito.getContents();
-        int idcomprador = Integer.parseInt(request.getParameter("idcomprador"));
-        while(!productosDelCarrito.isEmpty()){
-            List<Producto> productosDelVendedorX = carrito.getContentsSeller(Math.toIntExact(productosDelCarrito.get(productosDelCarrito.size()).getIdvendedor()));
+        
+        //NO SE PILLAR EL COMPRADOR
+        int idcomprador;
+        idcomprador = Math.toIntExact(1);
+       //NO SE PILLAR EL COMPRADOR
+        
+       List<Long> vendedores= carrito.VendedoresDiferentes();
+        Iterator<Long> iterator = vendedores.iterator();
+        while (iterator.hasNext()) {
+            int idvendedor = Math.toIntExact(iterator.next());
+            List<Producto> productosDelVendedorX = carrito.getProductsSameSeller(idvendedor);
             HandlerBDD handler = new HandlerBDD();
-            int idvendedor = Math.toIntExact(productosDelCarrito.get(productosDelCarrito.size()).getIdvendedor());
-            handler.addOrderToBDD(idcomprador, idvendedor, (ArrayList<Producto>) productosDelVendedorX);
-            BorrarProductosDelCarrito(productosDelVendedorX);
-            
-        }
+            handler.addOrderToBDD(idcomprador, idvendedor, productosDelVendedorX);
+	}
+        carrito.clear();
         
     }
 
@@ -64,19 +80,5 @@ public class PayCommand extends FrontCommand {
         }
     }
 
-
-    private void BorrarProductosDelCarrito(List<Producto> contents2) {         
-        HttpSession sesion = request.getSession(true);
-        Carrito carrito =(Carrito) sesion.getAttribute("carrito");
-        if(carrito == null){
-            carrito = new Carrito();
-            carrito.initialize();
-            sesion.setAttribute("carrito",carrito);
-        }       
-        for(Producto item : contents2){
-            carrito.deleteProduct(item.getNombre());
-            
-        }
-    }
     
 }

@@ -9,6 +9,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import modelo.Pedido;
@@ -409,15 +410,18 @@ void actualizarUsuario(int idUser, String nombre, String correo, String contrase
         cerrarBD(conn);
     }
 
-    void addOrderToBDD(int idcomprador, int idVendedor, ArrayList<Producto> order) {
-        conectarBD();
-        ArrayList<Integer> arrayIdProducts = new ArrayList<Integer>();
-        for (Producto temp : order) {
-	    arrayIdProducts.add(Math.toIntExact(temp.getId()));
-	}
+
+
+    void addOrderToBDD(int idcomprador, int idvendedor, List<Producto> order) {
+        
+            conectarBD();
+        List<Integer> arrayIdProducts = new ArrayList<>();
+        order.forEach((producto) -> {
+            arrayIdProducts.add(Math.toIntExact(producto.getId()));
+        });
         String sql = "INSERT INTO public.\"Pedido\"(\n" +
 "	idcomprador, idvendedor, estado, idproductos)\n" +
-"	VALUES ("+idcomprador+", "+idVendedor+", 'en curso', "+arrayIdProducts+");";
+"	VALUES ("+idcomprador+", "+idvendedor+", 'en curso', ARRAY "+arrayIdProducts+");";
         PreparedStatement enrollItmt;
        
         try {

@@ -7,6 +7,10 @@ package modelo;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  *
@@ -53,7 +57,7 @@ public class Carrito {
         return productList;
     }
     
-    public List getContentsSeller(int id){
+    public List getProductsSameSeller(int id){
         List<Producto> ProductosVendedor= new ArrayList<>();
         try{
             if(productList.size() == 0){
@@ -73,5 +77,36 @@ public class Carrito {
     public void clear() {
         productList.clear();
     }
+
+    public int numeroDeProductos() {
+        return this.productList.size();
+    }
+
+    public Producto getProduct(int i) {
+        return this.productList.get(i);
+    }
+
+    public Producto nextProduct() {
+        return this.productList.get(0);
+        
+    }
+
+    public List<Long> VendedoresDiferentes() {
+        List<Long> nVendedor= new ArrayList<>();
+        Iterator<Producto> iterator = this.productList.iterator();
+        while (iterator.hasNext()) {
+            nVendedor.add(iterator.next().getIdvendedor());
+	}
+    List<Long> sinDuplicados;
+        sinDuplicados = nVendedor
+                .stream()
+                .distinct()
+                .collect(Collectors.toList());
+        return sinDuplicados;
+		
+        
+        
+    }
+
         
 }
