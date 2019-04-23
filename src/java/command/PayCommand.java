@@ -21,7 +21,7 @@ public class PayCommand extends FrontCommand {
         try {
             MarkProductsAsSold();
             AddProductsToNewOrder();
-            forward("/index.jsp");
+            forward("/contrarrembolso.jsp");
             
         } catch (SQLException ex) {
             Logger.getLogger(PayCommand.class.getName()).log(Level.SEVERE, null, ex);
