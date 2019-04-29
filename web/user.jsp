@@ -54,6 +54,20 @@
                     <!-- End: EtiquetaPrecio -->
                     <!-- Start: Valor del Precio -->
                     <p style="font-style: italic;font-size: 15px;margin-top: 25px;"><%= request.getParameter("valoracion") %></p>
+                    <p style="font-style: italic;font-size: 15px;margin-top: 25px;">                    
+                        
+                                
+                    <form action="FrontController" method="POST" enctype="multipart/form-data" >
+                    
+                        <input type="hidden" placeholder="nombre" name="nombre" value="<%= request.getParameter("nombre") %>" >
+            
+                        0<input type="range" name="puntuacion" min="0" max="10" value="5">
+            
+                        10<input type="hidden" name="command" value="ScoreUserCommandwithName">
+            
+                        <input type="submit" value="Puntuar usuario"><br><br>
+                    </form></p>
+
                     <!-- End: Valor del Precio -->
                     <h3 class="text-left" style="margin-top: 35px;">nvisitas &nbsp;</h3>
                     <p style="font-style: italic;font-size: 15px;margin-top: 25px;"><%= request.getParameter("nvisitas") %></p>

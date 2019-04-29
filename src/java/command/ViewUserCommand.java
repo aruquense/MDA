@@ -25,7 +25,7 @@ public class ViewUserCommand extends FrontCommand {
 		String correo = user.getCorreo();
 		String localizacion = user.getLocalizacion();
 		int nvaloraciones = user.getnValoraciones();
-		Double valoracion = user.getValoracion()/nvaloraciones;
+		Double valoracion = user.getValoracion()/(nvaloraciones);
 		int nvisitas =user.getnVisitas()+1;
                 handler.updateNVisitas(idUser,nvisitas);
                         

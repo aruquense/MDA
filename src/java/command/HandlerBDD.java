@@ -280,11 +280,12 @@ public class HandlerBDD {
                 Integer[] idpedidos = new Integer[]{};
                 if(productos != null)
                     idpedidos = (Integer[])productos.getArray();                
-                Double valoracion = rs.getDouble("valoracion");
+                double valoracion= Double.valueOf(rs.getInt("valoracion"));
                 int nventas = Math.toIntExact(rs.getLong("nventas"));
                 int nvisitas = Math.toIntExact(rs.getLong("nvisitas"));
+                int nvaloraciones=rs.getInt("nvaloraciones");
                 long id = rs.getLong("id");
-                user = new Usuario(id, nventas, nvisitas,localizacion, nombre, correo, contrasena, valoracion, idpedidos,esPremium);
+                user = new Usuario(id, nventas, nvisitas,localizacion, nombre, correo, contrasena, valoracion, idpedidos,esPremium,nvaloraciones);
 
             }
         }catch(SQLException e){
@@ -335,7 +336,8 @@ public class HandlerBDD {
                 int nventas = Math.toIntExact(rs.getLong("nventas"));
                 int nvisitas = Math.toIntExact(rs.getLong("nvisitas"));
                 long id = rs.getLong("id");
-                user = new Usuario(id, nventas, nvisitas,localizacion, nombre, correo, contrasena, valoracion, idpedidos,esPremium);
+                int nvaloraciones=rs.getInt("nvaloraciones");
+                user = new Usuario(id, nventas, nvisitas,localizacion, nombre, correo, contrasena, valoracion, idpedidos,esPremium,nvaloraciones);
                 System.out.println("SE HA CREADO EL USUARIO");
             }
         } catch (SQLException ex) {
@@ -430,6 +432,36 @@ void actualizarUsuario(int idUser, String nombre, String correo, String contrase
         } catch (SQLException ex) {
             Logger.getLogger(HandlerBDD.class.getName()).log(Level.SEVERE, null, ex);
         }
+        cerrarBD(conn);
+    }
+
+    void puntuarUsuario(String nombre, int puntuacion) {
+conectarBD();
+String sql = "SELECT * FROM \"public\".\"Usuario\" WHERE nombre='"+nombre+"'";        
+        
+        String sql2 = "SELECT * FROM \"public\".\"Usuario\" WHERE nombre="+nombre;        
+        Statement stmt;        
+        conectarBD();
+        Integer nvaloraciones;
+                
+        Integer valoracion;
+        try {
+            stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
+            while (rs.next()) {
+                int idUsuario= rs.getInt("id");
+                nvaloraciones = rs.getInt("nvaloraciones");
+                valoracion = rs.getInt("valoracion");
+                nvaloraciones++;
+                valoracion+=puntuacion; 
+        puntuarUsuarioUpdate(idUsuario,valoracion,nvaloraciones);
+                 }
+                
+                
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(HandlerBDD.class.getName()).log(Level.SEVERE, null, ex);
+        }        
         cerrarBD(conn);
     }
 }

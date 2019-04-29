@@ -8,6 +8,19 @@ public class Usuario {
     private Integer[] idpedidos;
     private boolean espremium;
 
+    public Usuario(Long id, int nVentas, int nVisitas,String localizacion, String nombre, String correo, String contrasena, Double valoracion, Integer[] idpedidos, int espremium, int nvaloraciones) {
+        this.id = id;
+        this.nVentas = nVentas;
+        this.nVisitas = nVisitas;
+        this.localizacion = localizacion;
+        this.nombre = nombre;
+        this.correo = correo;
+        this.contrasena = contrasena;
+        this.valoracion = valoracion;
+        this.idpedidos = idpedidos;
+        this.espremium = (espremium == 0);      
+        this.nValoraciones=nvaloraciones;
+    }    
     public Usuario(Long id, int nVentas, int nVisitas,String localizacion, String nombre, String correo, String contrasena, Double valoracion, Integer[] idpedidos, int espremium) {
         this.id = id;
         this.nVentas = nVentas;
@@ -18,7 +31,7 @@ public class Usuario {
         this.contrasena = contrasena;
         this.valoracion = valoracion;
         this.idpedidos = idpedidos;
-        this.espremium = (espremium == 0);          
+        this.espremium = (espremium == 0);     
     }
 
     public Usuario() {    
