@@ -28,7 +28,6 @@ public class FrontController extends HttpServlet {
         FrontCommand command = getCommand(request);
         command.init(getServletContext(), request, response,request.getSession(true));
         command.process();
-
     }
 
     private FrontCommand getCommand(HttpServletRequest req){

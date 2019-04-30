@@ -16,7 +16,7 @@ public class RegisterUserCommand extends FrontCommand {
             String contrasena = request.getParameter("password");
             String localizacion = request.getParameter("localizacion");            
             handler.registrarUsuario(nombre, correo, contrasena, localizacion);
-            forward("/index.jsp");
+            forward("/index2.jsp");
         } catch (Exception ex) {
             Logger.getLogger(RegisterUserCommand.class.getName()).log(Level.SEVERE, null, ex);
         }

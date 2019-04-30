@@ -99,6 +99,55 @@
             </div>
         </div>
         <!-- End: cesta -->
+        <div class="container" style="margin-bottom: 130px;margin-top: 32px;">
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th style="font-size: 20px;">Nombre usuario</th>
+                            <th style="font-size: 20px;width: 55px;">Correo</th>
+                            <th style="width: 327px;font-size: 20px;">Localización</th>
+                            <th style="font-size: 20px;">Valoración</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <%
+                            if (request.getAttribute("userList") != null) {
+                                ArrayList<Usuario> userList = (ArrayList<Usuario>) request.getAttribute("userList");
+                                for (Usuario user: userList) {
+                                    Long idUser = user.getId();
+                                    String name = user.getNombre();
+                                    String correo = user.getCorreo();
+                                    String loc = user.getLocalizacion();
+                                    String ruta = "assets/img/man-user-t-1.png";
+                                    Double valoracion = user.getValoracion();
+                                    
+                        %>
+                        <tr>
+                            <!--                        <td><img src="assets/img/61yI7vWa83L._SL1000_.jpg" style="width: 162px;margin-right: -18px;margin-left: -47px;margin-top: -6px;"></td>-->
+                            <td><img src="<%=ruta%>" style="width: 162px;margin-right: -18px;margin-left: -47px;margin-top: -6px;"></td>
+                            <td style="width: 300px;padding-top: 21px;"><%=name%></td>
+                            <td style="width: 190px;margin-top: 0px;padding-top: 21px;"> <%=correo%> <br><br></td>
+                            <td><%=loc%></td>
+                            <td><span class="stars" data-rating="4" data-num-stars="5" ></span></td>                        
+                            <td style="width: 360px;">
+                                <form action="FrontController">
+                                    <input type="hidden" name="command" value="ViewUserCommand">
+                                    <input type="hidden" placeholder="id" name="idUser" value=<%=idUser%> >         
+                                    <button type="submit"  class="btn btn-primary border rounded" style="margin-right: 11px;margin-left: 0px;width: 193px;background-color: rgb(169,41,41);height: 58px;">
+                                        <i class="material-icons float-left" style="padding-right: 9px;margin-right: -11px;margin-left: 4px;"></i>Ver detalles
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                        <%}
+                        }%>
+                    </tbody>
+                </table>
+            </div>
+        </div>
         <!-- Start: Footer Dark -->
         <div class="footer-dark">
             <footer>
@@ -140,10 +189,9 @@
                 </div>
             </footer>
         </div>
-        <!-- End: Footer Dark -->
+        <!-- End: Footer Dark -->        
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     </body>
-
 </html>

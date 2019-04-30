@@ -33,8 +33,8 @@
                                     <div class="d-flex justify-content-center h-100">
                                         <form action="FrontController">
                                             <div class="searchbar">
-                                                <input type="hidden" name="command" value="SearchProductCommand">
-                                                <input class="search_input" type="text" name="producto" placeholder="Busca un producto...">
+                                                <input type="hidden" name="command" value="SearchCommand">
+                                                <input class="search_input" type="text" name="busqueda" placeholder="Busca un producto o usuario...">
                                                 <a href="#" class="search_icon"><i class="fas fa-search"></i></a>
                                             </div>
                                         </form>

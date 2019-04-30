@@ -23,7 +23,7 @@ public class HandlerBDD {
         try{     
             Class.forName("org.postgresql.Driver");      
             System.out.println("Tratando de conectar");
-            this.conn = DriverManager.getConnection("jdbc:postgresql://localhost:5433/mdaBDD","postgres","1234");
+            this.conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/mdaBDD3","postgres","1234");
             System.out.println("HEMOS CONECTADO");
         }catch(ClassNotFoundException |SQLException e){
             Logger.getLogger(HandlerBDD.class.getName()).log(Level.SEVERE, null, e);
@@ -463,6 +463,36 @@ String sql = "SELECT * FROM \"public\".\"Usuario\" WHERE nombre='"+nombre+"'";
             Logger.getLogger(HandlerBDD.class.getName()).log(Level.SEVERE, null, ex);
         }        
         cerrarBD(conn);
+    }
+    ArrayList<Usuario> searchUser(String parameter) {
+        conectarBD();
+        ArrayList<Usuario> searchList = new ArrayList<>();
+        String sql = "SELECT * FROM \"public\".\"Usuario\" WHERE LOWER(nombre) LIKE LOWER('%"+parameter+"%')";        
+        Statement stmt;
+        try {
+            stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
+            while (rs.next()) {
+                String nombre = rs.getString("nombre");
+                int esPremium = rs.getInt("espremium");
+                String correo = rs.getString("correo");
+                String contrasena = rs.getString("contrasena");
+                String localizacion = rs.getString("localizacion");
+                Array productos = rs.getArray("idpedidos");            
+                Integer[] idpedidos = new Integer[]{};
+                if(productos != null)
+                    idpedidos = (Integer[])productos.getArray();                
+                double valoracion= Double.valueOf(rs.getInt("valoracion"));
+                int nventas = Math.toIntExact(rs.getLong("nventas"));
+                int nvisitas = Math.toIntExact(rs.getLong("nvisitas"));
+                int nvaloraciones=rs.getInt("nvaloraciones");
+                long id = rs.getLong("id");
+                searchList.add(new Usuario(id, nventas, nvisitas,localizacion, nombre, correo, contrasena, valoracion, idpedidos,esPremium,nvaloraciones));
+            }  
+        }catch(SQLException e){
+            
+        }
+        return searchList;
     }
 }
 

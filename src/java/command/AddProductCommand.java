@@ -23,7 +23,7 @@ public class AddProductCommand extends FrontCommand {
             String descripcion = request.getParameter("descripcion");
             String path = uploadFile();
             handler.añadirProducto(idVendedor, nombre, precio, descripcion, path);
-            forward("/index.jsp");
+            forward("/index2.jsp");
         } catch (Exception ex) {
             Logger.getLogger(AddProductCommand.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -32,8 +32,8 @@ public class AddProductCommand extends FrontCommand {
         Part part = (Part) (Part) request.getPart("file");         
                         //new File("Ruta de la carpeta de cada miembro imgs en Netbeans")./imgs
                         
-        //File uploads = new File("J:\\Users\\Default\\Documents\\NetBeansProjects\\MDA\\web\\imgs");
-        File uploads = new File("C:\\Users\\Aru\\Documents\\GitHub\\MDA\\web\\imgs");
+        File uploads = new File("C:\\Users\\carlosgustavo\\Documents\\NetBeansProjects\\MDA\\web\\imgs");
+        //File uploads = new File("C:\\Users\\Aru\\Documents\\GitHub\\MDA\\web\\imgs");
         
                 
         int tam = handler.encontrarNúmeroProductos()+1;
