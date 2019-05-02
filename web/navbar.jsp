@@ -43,14 +43,15 @@
                                                     <div class="dropdown dropdown-lg">
                                                         <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="caret"></span></button>
                                                         <div class="dropdown-menu dropdown-menu-right" role="menu">
-                                                            <form class="form-horizontal" role="form">
+                                                            <form action="FrontController" class="form-horizontal" role="form">
+                                                            <input type="hidden" name="command" value="AdvancedSearchCommand">
                                                               <div class="form-group">
                                                                 <div class="form-group">
                                                                 <label for="contain">Búsqueda avanzada</label>
                                                                 <input type="text" name="busqueda" class="form-control" placeholder="Buscar productos y usuarios" />
                                                               </div>  
                                                                 <label for="filter">Categoría</label>
-                                                                <select class="form-control">
+                                                                <select class="form-control" name="categoria">
                                                                     <option value="0" selected>Todas las categorías</option>
                                                                     <option value="1">Electrónica</option>
                                                                     <option value="2">Hogar</option>
@@ -59,7 +60,7 @@
                                                               <div class="form-group">
                                                                 <label for="contain">Precio mínimo</label>
                                                                     <div class="slidecontainer">
-                                                                      <input type="range" min="0" max="500" value="0" class="slider" id="myRange">
+                                                                      <input type="range" name="precioMin" min="0" max="500" value="0" class="slider" id="myRange">
                                                                       <span id="demo" style="font-weight:bold;color:blue">62</span>
                                                                     </div>
                                                                 <script>
@@ -76,7 +77,7 @@
                                                               <div class="form-group">
                                                                 <label for="contain">Precio máximo</label>
                                                                     <div class="slidecontainer">
-                                                                      <input type="range" min="0" max="500" value="500" class="slider" id="myRange2">
+                                                                      <input type="range" name="precioMax" min="0" max="500" value="500" class="slider" id="myRange2">
                                                                       <span id="demo2" style="font-weight:bold;color:red">62</span>
                                                                     </div>
                                                                 <script>
