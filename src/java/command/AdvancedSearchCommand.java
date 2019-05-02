@@ -17,7 +17,14 @@ public class AdvancedSearchCommand extends FrontCommand{
         System.out.println(precioMin);
         System.out.println(precioMax);
         System.out.println(categoria);
-        ArrayList<Producto> searchList = handler.searchAdvancedProduct(request.getParameter("busqueda"), precioMin, precioMax);           
+        ArrayList<Producto> searchList;
+        if(categoria.equals("Todo")){
+            searchList = handler.searchAdvancedProduct(request.getParameter("busqueda"), precioMin, precioMax);           
+            request.setAttribute("searchList", searchList);
+        }else{
+            searchList = handler.searchAdvancedProductCategory(request.getParameter("busqueda"), precioMin, precioMax, categoria);           
+            
+        }
         request.setAttribute("searchList", searchList);
         ArrayList<Usuario> userList = handler.searchUser(request.getParameter("busqueda"));
         request.setAttribute("userList", userList);

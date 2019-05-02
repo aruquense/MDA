@@ -184,6 +184,31 @@ public class HandlerBDD {
         return searchList;
     }
         
+    public ArrayList<Producto> searchAdvancedProductCategory(String parameter, int precioMin, int precioMax, String category) {
+        conectarBD();
+        ArrayList<Producto> searchList = new ArrayList<>();
+        String sql = "SELECT * FROM \"public\".\"Producto\" WHERE LOWER(nombre) LIKE LOWER('%"+parameter+"%') AND precio >"+precioMin+"AND precio <"+precioMax+"AND categoria = '"+category+"'";        
+        Statement stmt;
+        try {
+            stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
+            while (rs.next()) {
+                Long id = rs.getLong("id");
+                Long idvendedor = rs.getLong("idvendedor");
+                Double precio = rs.getDouble("precio");
+                String descripcion = rs.getString("descripcion");
+                String img = rs.getString("imagen");
+                String nombre = rs.getString("nombre");            
+                Producto producto = new Producto(id,nombre,idvendedor,precio,descripcion,img);
+                searchList.add(producto);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(HandlerBDD.class.getName()).log(Level.SEVERE, null, ex);
+        }        
+        cerrarBD(conn);
+        return searchList;
+    }
+        
     public ArrayList<Pedido> obtenerPedidos(int idUsuario){
         conectarBD();
         ArrayList<Pedido> orderList = new ArrayList<>();

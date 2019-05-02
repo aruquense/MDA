@@ -52,9 +52,9 @@
                                                               </div>  
                                                                 <label for="filter">Categoría</label>
                                                                 <select class="form-control" name="categoria">
-                                                                    <option value="0" selected>Todas las categorías</option>
-                                                                    <option value="1">Electrónica</option>
-                                                                    <option value="2">Hogar</option>
+                                                                    <option value="Todo" selected>Todas las categorías</option>
+                                                                    <option value="Ocio">Ocio</option>
+                                                                    <option value="Hogar">Hogar</option>
                                                                 </select>
                                                               </div>
                                                               <div class="form-group">
