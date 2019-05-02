@@ -16,7 +16,7 @@
     </head>
 <div>
             <nav class="navbar navbar-light navbar-expand-md navigation-clean-button">
-                <div class="container"><a class="navbar-brand" href="index2.jsp">CompraVENTA</a><button class="navbar-toggler" data-toggle="collapse" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
+                <div class="container"><a class="navbar-brand" href="index.jsp">CompraVENTA</a><button class="navbar-toggler" data-toggle="collapse" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
                     <div class="collapse navbar-collapse"
                          id="navcol-1">
                         <ul class="nav navbar-nav mr-auto">
@@ -29,17 +29,78 @@
                             <li class="nav-item" role="presentation"><a class="nav-link" href="addProduct.jsp">Añadir una venta</a></li>                            
                             <%}%>
                             <li class="nav-item" role="presentation">
-                                <div class="container h-100">
-                                    <div class="d-flex justify-content-center h-100">
-                                        <form action="FrontController">
-                                            <div class="searchbar">
+                            <div class="container">
+                                    <div class="row">
+                                        <div class="col-md-24">
+                                        <div class="input-group" id="adv-search">
+                                            <form action="FrontController" class="form-inline">
                                                 <input type="hidden" name="command" value="SearchCommand">
-                                                <input class="search_input" type="text" name="busqueda" placeholder="Busca un producto o usuario...">
-                                                <a href="#" class="search_icon"><i class="fas fa-search"></i></a>
+                                                <input type="text" name="busqueda" class="form-control" placeholder="Buscar productos y usuarios" />
+                                                <button type="submit" class="btn btn-primary"><span class="fas fa-search" aria-hidden="true"></span></button>
+                                            </form>
+                                            <div class="input-group-btn">
+                                                <div class="btn-group" role="group">
+                                                    <div class="dropdown dropdown-lg">
+                                                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="caret"></span></button>
+                                                        <div class="dropdown-menu dropdown-menu-right" role="menu">
+                                                            <form class="form-horizontal" role="form">
+                                                              <div class="form-group">
+                                                                <div class="form-group">
+                                                                <label for="contain">Búsqueda avanzada</label>
+                                                                <input type="text" name="busqueda" class="form-control" placeholder="Buscar productos y usuarios" />
+                                                              </div>  
+                                                                <label for="filter">Categoría</label>
+                                                                <select class="form-control">
+                                                                    <option value="0" selected>Todas las categorías</option>
+                                                                    <option value="1">Electrónica</option>
+                                                                    <option value="2">Hogar</option>
+                                                                </select>
+                                                              </div>
+                                                              <div class="form-group">
+                                                                <label for="contain">Precio mínimo</label>
+                                                                    <div class="slidecontainer">
+                                                                      <input type="range" min="0" max="500" value="0" class="slider" id="myRange">
+                                                                      <span id="demo" style="font-weight:bold;color:blue">62</span>
+                                                                    </div>
+                                                                <script>
+                                                                    var slider = document.getElementById("myRange");
+                                                                    var output = document.getElementById("demo");
+                                                                    output.innerHTML = slider.value; // Display the default slider value
+
+                                                                    // Update the current slider value (each time you drag the slider handle)
+                                                                    slider.oninput = function() {
+                                                                      output.innerHTML = this.value;
+                                                                    } 
+                                                                </script>
+                                                              </div>
+                                                              <div class="form-group">
+                                                                <label for="contain">Precio máximo</label>
+                                                                    <div class="slidecontainer">
+                                                                      <input type="range" min="0" max="500" value="500" class="slider" id="myRange2">
+                                                                      <span id="demo2" style="font-weight:bold;color:red">62</span>
+                                                                    </div>
+                                                                <script>
+                                                                    var slider2 = document.getElementById("myRange2");
+                                                                    var output2 = document.getElementById("demo2");
+                                                                    output2.innerHTML = slider2.value; // Display the default slider value
+
+                                                                    // Update the current slider value (each time you drag the slider handle)
+                                                                    slider2.oninput = function() {
+                                                                      output2.innerHTML = this.value;
+                                                                    } 
+                                                                </script>
+                                                              </div>
+                                                              <button type="submit" class="btn btn-primary"><span class="fas fa-search" aria-hidden="true"></span></button>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
-                                        </form>
+                                        </div>
+                                      </div>
                                     </div>
-                                </div>
+                                    </div>
+                            </div>
 
                             </li>
                             <%if(userNav!=null){%>
@@ -50,3 +111,4 @@
                 </div>
             </nav>
         </div>
+        

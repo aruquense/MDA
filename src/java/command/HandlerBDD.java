@@ -23,7 +23,7 @@ public class HandlerBDD {
         try{     
             Class.forName("org.postgresql.Driver");      
             System.out.println("Tratando de conectar");
-            this.conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/mdaBDD3","postgres","1234");
+            this.conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/mda2","postgres","1234");
             System.out.println("HEMOS CONECTADO");
         }catch(ClassNotFoundException |SQLException e){
             Logger.getLogger(HandlerBDD.class.getName()).log(Level.SEVERE, null, e);
