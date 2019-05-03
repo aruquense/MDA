@@ -23,7 +23,7 @@ public class HandlerBDD {
         try{     
             Class.forName("org.postgresql.Driver");      
             System.out.println("Tratando de conectar");
-            this.conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/mda2","postgres","1234");
+            this.conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/mdaBDD","postgres","1234");
             System.out.println("HEMOS CONECTADO");
         }catch(ClassNotFoundException |SQLException e){
             Logger.getLogger(HandlerBDD.class.getName()).log(Level.SEVERE, null, e);
@@ -543,6 +543,35 @@ String sql = "SELECT * FROM \"public\".\"Usuario\" WHERE nombre='"+nombre+"'";
             
         }
         return searchList;
+    }
+    
+        public Pedido getOrderById(long idOrder){
+        conectarBD();
+        Pedido pedido = null;
+        String sql = "SELECT * FROM \"public\".\"Pedido\" WHERE id="+idOrder;        
+        Statement stmt;
+        try {
+            stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
+            while (rs.next()) {
+                Long idcomprador = rs.getLong("idComprador");
+                Long idvendedor = rs.getLong("idvendedor");
+                String estado = rs.getString("estado");
+                Array productos = rs.getArray("idproductos");
+                Long id = rs.getLong("id");
+
+                Integer[] idproductos = new Integer[]{};
+                if(productos != null)
+                    idproductos = (Integer[])productos.getArray();  
+               
+                pedido = new Pedido(id, idcomprador, idvendedor, estado, idproductos);
+            }
+        }catch(SQLException e){
+        }
+        return pedido;
+        
+        
+        
     }
 }
 

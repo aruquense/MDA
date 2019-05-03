@@ -64,7 +64,8 @@
                     HandlerBDD handler = new HandlerBDD();
                     if(request.getAttribute("orderList")!=null){
                         ArrayList<Pedido> list = (ArrayList<Pedido>) request.getAttribute("orderList");
-                        for (Pedido order : list) {                                                                
+                        for (Pedido order : list) {   
+                            Long idOrder = order.getId();
                             String stateOrder =order.getEstado();
                             for(Integer idProd: order.getIdproductos()){
                                 Producto prod = handler.leerProducto(idProd);                                                                                                                                                            
@@ -83,10 +84,23 @@
                         <td style="width: 190px;margin-top: 0px;padding-top: 21px;"><strong><%=precio%>€&nbsp;</strong><br><br></td>
                         <td><%=dirEnvio%>. Correo del vendedor: <%=correoSeller%></td>
                         <td style="color: rgb(3,156,0);font-weight: bold;"><%=stateOrder%></td>
-                        <td style="width: 248px;height: 134px;"><button class="btn btn-primary border rounded" type="button" style="margin-right: 11px;margin-left: 74px;width: 228px;background-color: rgb(85,85,85);height: 42px;margin-top: 0px;margin-bottom: 11px;"><i class="fas fa-question-circle float-left" style="padding-right: 9px;margin-right: -6px;margin-left: -2px;margin-top: 3px;"></i>Contactar con vendedor</button>
+                        <td style="width: 248px;height: 134px;"><button class="btn btn-primary border rounded" style="margin-right: 11px;margin-left: 74px;width: 228px;background-color: rgb(85,85,85);height: 42px;margin-top: 0px;margin-bottom: 11px;" type="button"><i class="fas fa-question-circle float-left" style="padding-right: 9px;margin-right: -6px;margin-left: -2px;margin-top: 3px;"></i>Contactar con vendedor</button>
+                        <form action="FrontController">
+                            <input type="hidden" name="idOrder" value="<%=idOrder%>">
+                            <input type="hidden" name="command" value="GetOrderDetailsCommand">            
                             <button
-                                class="btn btn-primary border rounded" type="button" style="margin-right: 11px;margin-left: 74px;width: 228px;background-color: rgb(169,41,41);height: 42px;margin-top: 0px;"><i class="fa fa-star float-left" style="padding-right: 9px;margin-right: -25px;margin-left: 15px;margin-top: 4px;"></i>Valorar vendedor</button>
-                        </td>
+                                class="btn btn-primary border rounded" style="margin-right: -6px;margin-left: 74px;
+                                width: 228px;background-color: rgb(85,85,85);height: 42px;
+                                margin-top: 0px;margin-bottom: 11px;" type="submit">
+                                <i class="fas fa-file float-left" style="padding-right: 9px;
+                                   margin-right: -265px;margin-left: 18px;margin-top: 3px;">
+                                       
+                                </i>Ver detalles</button></form>
+                                
+                            
+                                <button class="btn btn-primary border rounded" style="margin-right: 11px;margin-left: 74px;width: 228px;background-color: rgb(169,41,41);height: 42px;margin-top: 0px;"
+                                    type="button">
+                                <i class="fa fa-star float-left" style="padding-right: 9px;margin-right: -25px;margin-left: 15px;margin-top: 4px;"></i>Valorar vendedor</button></td>
                     </tr>
                     <%    }
                     }        
@@ -134,10 +148,10 @@
                         <td style="width: 190px;margin-top: 0px;padding-top: 21px;"><strong><%=precio%>€&nbsp;</strong><br><br></td>
                         <td><%=dirEnvio%>. Correo del vendedor: <%=correoSeller%></td>
                         <td style="color: rgb(3,156,0);font-weight: bold;"><%=stateOrder%></td>
-                        <td style="width: 248px;height: 134px;"><button class="btn btn-primary border rounded" type="button" style="margin-right: 11px;margin-left: 74px;width: 228px;background-color: rgb(85,85,85);height: 42px;margin-top: 0px;margin-bottom: 11px;"><i class="fas fa-question-circle float-left" style="padding-right: 9px;margin-right: -6px;margin-left: -2px;margin-top: 3px;"></i>Contactar con comprador</button>
+                        <td style="width: 248px;height: 134px;"><button class="btn btn-primary border rounded" style="margin-right: 11px;margin-left: 74px;width: 228px;background-color: rgb(85,85,85);height: 42px;margin-top: 0px;margin-bottom: 11px;" type="button"><i class="fas fa-question-circle float-left" style="padding-right: 9px;margin-right: -6px;margin-left: -2px;margin-top: 3px;"></i>Contactar con comprador</button>
                             <button
-                                class="btn btn-primary border rounded" type="button" style="margin-right: 11px;margin-left: 74px;width: 228px;background-color: rgb(169,41,41);height: 42px;margin-top: 0px;"><i class="fa fa-exclamation-circle float-left" style="padding-right: 0px;margin-right: -92px;margin-left: 24px;margin-top: 4px;margin-bottom: 0px;"></i>Ver incidencias</button>
-                        </td>
+                                class="btn btn-primary border rounded" style="margin-right: -6px;margin-left: 74px;width: 228px;background-color: rgb(85,85,85);height: 42px;margin-top: 0px;margin-bottom: 11px;" type="button"><i class="fas fa-file float-left" style="padding-right: 9px;margin-right: -265px;margin-left: 18px;margin-top: 3px;"></i>Ver detalles</button><button class="btn btn-primary border rounded" style="margin-right: 11px;margin-left: 74px;width: 228px;background-color: rgb(169,41,41);height: 42px;margin-top: 0px;"
+                                    type="button"><i class="fa fa-exclamation-circle float-left" style="padding-right: 0px;margin-right: -92px;margin-left: 24px;margin-top: 4px;margin-bottom: 0px;"></i>Ver incidencias</button></td>
                     </tr>
                     <%    }
                     }        
