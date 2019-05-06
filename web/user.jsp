@@ -73,9 +73,13 @@
                     <p style="font-style: italic;font-size: 15px;margin-top: 25px;"><%= request.getParameter("nvisitas") %></p>
                     <h3 class="text-left" style="margin-top: 35px;">nvaloraciones &nbsp;</h3>
                     <p style="font-style: italic;font-size: 15px;margin-top: 25px;"><%= request.getParameter("nvaloraciones") %></p>
-                    <div class="btn-group" role="group" style="margin-top: 35px;margin-left: 54px;"><button class="btn btn-primary border rounded" type="button" style="margin-right: 11px;margin-left: 0px;width: 193px;background-color: rgb(169,41,41);height: 58px;"><i class="material-icons float-left" style="padding-right: 9px;margin-right: -11px;margin-left: 4px;">shopping_cart</i>Añadir a la cesta</button>
-                        <button
-                            class="btn btn-primary border rounded" type="button" style="margin-right: 11px;margin-left: 6px;width: 212px;background-color: rgb(169,41,41);"><i class="material-icons float-left" style="padding-right: 9px;margin-right: -11px;margin-left: 4px;">question_answer</i>Preguntar vendedor</button>
+                    <div class="btn-group" role="group" style="margin-top: 35px;margin-left: 54px;"><button class="btn btn-primary border r ounded" type="button" style="margin-right: 11px;margin-left: 0px;width: 193px;background-color: rgb(169,41,41);height: 58px;"><i class="material-icons float-left" style="padding-right: 9px;margin-right: -11px;margin-left: 4px;">shopping_cart</i>Añadir a la cesta</button>
+                                                <form action="FrontController">
+                            <input type="hidden" name="command" value="ComentarUsuario">
+                            <button type="submit"  class="btn btn-primary border rounded" style="background-color: rgb(169,41,41); height: 58px;width: 150px">
+                                <i class="material-icons float-right" style="">user_comment</i>Comentar
+                            </button>
+                        </form>        
                     </div>
                 </div>
             </div>

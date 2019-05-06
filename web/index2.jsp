@@ -19,6 +19,14 @@
             <input type="hidden" name="command" value="PayCommand">    
             <input type="submit" value="PayCommand">
         </form> 
+        		<h1>Comentar vendedor</h1>
+        <form action="FrontController" method="POST" enctype="multipart/form-data" >
+            <input type="text" placeholder="idvendedor" name="idvendedor" value="" required>
+            <input type="text" placeholder="idusuariocomentando" name="idusuariocomentando" value="" required>
+            <input type="text" placeholder="Comentario" name="comentario" value="" required>
+            <input type="hidden" name="command" value="ComentarUsuario">    
+            <input type="submit">
+        </form>   
         <h1>TEST MarkProductAsSold</h1>
         <form action="FrontController" method="POST" enctype="multipart/form-data" >
             <input type="text" placeholder="idproducto" name="idproducto" value="" required>         

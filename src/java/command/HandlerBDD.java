@@ -702,5 +702,21 @@ String sql = "SELECT * FROM \"public\".\"Usuario\" WHERE nombre='"+nombre+"'";
         cerrarBD(conn);
         return list;
     }
+
+		    void comentarUsuario(int idVendedor, int idUsuario, String comentario) {
+        conectarBD();        
+        String sql = "INSERT INTO public.\"ComentarioUsuario\"(\n" +
+"	\"id_usuarioReceptor\", id_usuario_comentario, comentario)\n" +
+"	VALUES ("+idVendedor+", "+idUsuario+", \'"+comentario+"\');";        
+
+        PreparedStatement enrollItmt;
+        try {
+            enrollItmt = this.conn.prepareStatement(sql);
+            enrollItmt.execute();
+        } catch (SQLException ex) {
+            Logger.getLogger(HandlerBDD.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        cerrarBD(conn);
+    }
 }
 
