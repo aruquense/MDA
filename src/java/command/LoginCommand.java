@@ -22,7 +22,7 @@ public class LoginCommand extends FrontCommand{
         if (user != null){            
             session.setAttribute("usuario", user);            
         }
-        forward("/index2.jsp");
+        forward("/index.jsp");
     }
     
 }

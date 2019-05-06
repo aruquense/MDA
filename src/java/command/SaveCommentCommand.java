@@ -7,13 +7,14 @@ package command;
 
 /**
  *
- * @author Gustavo
+ * @author orlan
  */
-public class UnloginCommand extends FrontCommand{
+public class SaveCommentCommand extends FrontCommand {
 
     @Override
     public void process() {
-        session.invalidate();
+        HandlerBDD handler = new HandlerBDD();
+        handler.writeComment(request.getParameter("idAuthor"), request.getParameter("idProduct"), request.getParameter("comment"));
         forward("/index.jsp");
     }
     

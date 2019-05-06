@@ -7,14 +7,15 @@ package command;
 
 /**
  *
- * @author Gustavo
+ * @author orlan
  */
-public class UnloginCommand extends FrontCommand{
+public class DeleteCommentCommand extends FrontCommand{
 
     @Override
     public void process() {
-        session.invalidate();
-        forward("/index.jsp");
+        HandlerBDD handler = new HandlerBDD();
+        handler.deleteComment(Integer.parseInt(request.getParameter("idComment")));
+        forward("/deleteConfirmation.jsp");
     }
     
 }

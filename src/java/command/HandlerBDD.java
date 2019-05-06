@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import modelo.Comentario;
 import modelo.Pedido;
 import modelo.Usuario;
 
@@ -573,5 +574,107 @@ String sql = "SELECT * FROM \"public\".\"Usuario\" WHERE nombre='"+nombre+"'";
         
         
     }
+        public ArrayList compradorHasBoughtProduct(long idComprador){
+        conectarBD();
+        ArrayList<Pedido> orderList = new ArrayList<>();
+        String sql = "SELECT * FROM \"public\".\"Pedido\" WHERE idcomprador="+idComprador;        
+        Statement stmt;
+        try {
+            stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
+            while (rs.next()) {
+                Long id = rs.getLong("id");
+                Long idcomprador = rs.getLong("idcomprador");
+                Long idvendedor = rs.getLong("idvendedor");                
+                String estado = rs.getString("estado");                                       
+                Array productos = rs.getArray("idproductos");            
+                Integer[] idProductos = (Integer[])productos.getArray();
+                Pedido pedido = new Pedido(id, idcomprador, idvendedor, estado, idProductos);
+                orderList.add(pedido);                
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(HandlerBDD.class.getName()).log(Level.SEVERE, null, ex);
+        }        
+        cerrarBD(conn);
+        return orderList;
+        
+        
+        
+    }        
+
+    public void writeComment(String author, String productId, String comment) {
+                  
+        conectarBD();
+        String sql = "INSERT INTO \"public\".\"Comentario\"(idusuario, comentario, idproducto) VALUES ('"+author+"','"+comment+"','"+productId+"')";  
+        if (comment.isEmpty() || comment.length() < 2){
+            System.out.println("Se ha enviado un comentario vacío o muy corto.");
+        }else{
+            PreparedStatement enrollItmt;
+                try {
+                    enrollItmt = this.conn.prepareStatement(sql);
+                    enrollItmt.execute();
+                    System.out.println("Se añadido un nuevo comentario en el producto " + productId);
+                } catch (SQLException ex) {
+                    Logger.getLogger(HandlerBDD.class.getName()).log(Level.SEVERE, null, ex);
+                }
+        }
+        cerrarBD(conn);
+
+    }
+    
+    
+    public ArrayList<Comentario> readComments (int idproducto){
+        conectarBD();
+        ArrayList<Comentario> comentarios = new ArrayList<>();
+        String sql = "SELECT * FROM \"public\".\"Comentario\" WHERE idproducto="+idproducto;        
+        Statement stmt;
+        try {
+            stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
+            while (rs.next()) {
+                Long id = rs.getLong("id");
+                Long autor = rs.getLong("idusuario");
+                String comment = rs.getString("comentario");   
+                Long idproduct = rs.getLong("idproducto");
+                Comentario comentario = new Comentario(id, autor, comment, idproduct);
+                comentarios.add(comentario);    
+                System.out.println("Se ha leído correctamente.");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(HandlerBDD.class.getName()).log(Level.SEVERE, null, ex);
+        }        
+        cerrarBD(conn);
+        return comentarios;
+    }
+    
+    public void deleteComment (int idcomment){
+        conectarBD();
+        String sql = "DELETE FROM \"public\".\"Comentario\" WHERE id="+idcomment;        
+        Statement stmt;
+        try {
+            stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
+            System.out.println("Se ha ejecutado la orden de eliminado.");
+        } catch (SQLException ex) {
+            Logger.getLogger(HandlerBDD.class.getName()).log(Level.SEVERE, null, ex);
+        }        
+        cerrarBD(conn);
+       
+    }
+
+    public void updateComment(int idComment, String message) {
+        conectarBD();
+        String sql = "UPDATE \"public\".\"Comentario\" SET comentario = ?  WHERE id="+idComment+"";
+        PreparedStatement enrollItmt;
+        try {
+            enrollItmt = this.conn.prepareStatement(sql);
+            enrollItmt.setString(1, message);
+            enrollItmt.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(HandlerBDD.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        cerrarBD(conn);
+    }
+    
 }
 

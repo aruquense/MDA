@@ -23,7 +23,7 @@ public class AddProductCommand extends FrontCommand {
             String descripcion = request.getParameter("descripcion");
             String path = uploadFile();
             handler.añadirProducto(idVendedor, nombre, precio, descripcion, path);
-            forward("/index2.jsp");
+            forward("/index.jsp");
         } catch (Exception ex) {
             Logger.getLogger(AddProductCommand.class.getName()).log(Level.SEVERE, null, ex);
         }

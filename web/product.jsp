@@ -4,6 +4,10 @@
     Author     : sergio
 --%>
 
+<%@page import="modelo.Comentario"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="modelo.Pedido"%>
+<%@page import="command.HandlerBDD"%>
 <%@page import="modelo.Usuario"%>
 <%@page import="modelo.Producto"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -81,6 +85,116 @@
         </div>
     </div>
     <!-- End: 1 Row 2 Columns -->
+    <!-- Start: Comentarios -->
+    <div class="container" style="margin-bottom: 85px;">
+                <%
+                    HandlerBDD handler = new HandlerBDD(); 
+                    Usuario usuario = (Usuario) session.getAttribute("usuario");
+                    boolean hasBought = false;
+                    ArrayList<Pedido> pedidos = new ArrayList<Pedido>(); 
+                    if (usuario != null){                    
+                        pedidos = (ArrayList<Pedido>) handler.compradorHasBoughtProduct(usuario.getId());
+                        for (Pedido pedido : pedidos) {
+                                Integer[] idProductos = pedido.getIdproductos();
+                            for (Integer id : idProductos) {
+                                if (id == producto.getId().intValue()){
+                                    hasBought = true; 
+                                    System.out.println("El usuario " + usuario.getNombre() + "("+ usuario.getId()+") ha comprado el producto con id " + id);
+                                    break;
+                                }
+                            }
+                        }
+
+                    }
+                    
+                    //Cogemos todos los comentarios todos los comentarios. 
+                    ArrayList<Comentario> comentarios = handler.readComments(producto.getId().intValue());
+                %>        
+        <h1>Comentarios</h1>
+        <%
+            if(!comentarios.isEmpty()){
+                for (Comentario comentario : comentarios) {
+                       String nombreUsuario = handler.getUsuarioByID(comentario.getIdAuthor()).getNombre();
+                       String comment = comentario.getComentario();
+                       System.out.println("El id del comentario es: " + String.valueOf(comentario.getId()));
+                       //Faltaría la imagen del usuario. 
+            
+       
+                    if (usuario == null || usuario.getId() != handler.getUsuarioByID(comentario.getIdAuthor()).getId()){
+                    
+        %>
+        <!-- Start: ComentarioSinBotones -->
+        <div class="border rounded" style="margin-top: 19px;margin-bottom: 30px;background-color: rgba(187,187,187,0.17);height: 175px;">
+            <div class="text-right d-xl-flex justify-content-xl-end" style="width: 762px;margin-bottom: -49px;margin-top: 18px;">
+                <!-- Start: BotonesDeEdición/Borrado -->
+                <div class="btn-group btn-group-sm" role="group" style="margin-top: -5px;margin-right: -329px;"></div>
+                <!-- End: BotonesDeEdición/Borrado -->
+            </div><img class="rounded-circle shadow-sm" style="width: 93px;margin-top: 47px;margin-left: 34px;padding-top: 8px;" src="assets/img/imagen_perfil.jpg">
+            <p style="margin-top: -85px;margin-left: 186px;margin-bottom: 32px;"><label class="d-xl-flex justify-content-xl-start" style="margin-top: -4px;padding-right: 0px;margin-left: 37px;width: 680px;"><%=comment%></label><br></p>
+            <!-- Start: NombreDelUsuario --><label class="d-xl-flex align-items-xl-start" style="margin-left: 30px;margin-top: 38px;padding-right: 1px;margin-right: 962px;"><%=nombreUsuario%></label>
+            <!-- End: NombreDelUsuario -->
+        </div>
+        <!-- End: ComentarioSinBotones -->
+        <%}else{%>
+        <!-- Start: ComentarioDeUnUsuario -->
+        <form action="FrontController" id="deleteForm+<%=comentario.getId()%>">
+            <input type="hidden" name="idComment" value="<%=comentario.getId()%>">
+            <input type="hidden" name="command" value="DeleteCommentCommand"> 
+        </form>
+                          
+        <form action="editComment.jsp" id="editForm+<%=comentario.getId()%>">
+            <input type="hidden" name="idComment" value="<%=comentario.getId()%>">
+            <input type="hidden" name="message" value="<%=comentario.getComentario()%>"> 
+        </form>                            
+        <div class="border rounded" style="margin-top: 19px;margin-bottom: 30px;background-color: rgba(187,187,187,0.17);height: 175px;">
+            <div class="text-right d-xl-flex justify-content-xl-end" style="width: 762px;margin-bottom: -49px;margin-top: 18px;">
+
+                <!-- Start: BotonesDeEdición/Borrado -->                     
+                            <div class="btn-group btn-group-sm" role="group" style="margin-top: -5px;margin-right: -329px;"><button class="btn btn-primary border rounded" type="submit" form="editForm+<%=comentario.getId()%>" style="margin-right: 7px;background-color: rgb(111,111,111);"><i class="fa fa-edit" style="margin-right: 7px;"></i>Editar</button><button class="btn btn-primary border rounded"
+                                                                                                                                                                                                        type="submit" form="deleteForm+<%=comentario.getId()%>" style="background-color: rgb(169,41,41);"><i class="icon ion-android-delete" style="margin-right: 6px;"></i>Eliminar</button></div>
+                <!-- End: BotonesDeEdición/Borrado -->
+            </div><img class="rounded-circle shadow-sm" style="width: 93px;margin-top: 14px;margin-left: 34px;padding-top: 8px;" src="assets/img/imagen_perfil.jpg">
+            <p style="margin-top: -85px;margin-left: 186px;margin-bottom: 32px;"><label class="d-xl-flex justify-content-xl-start" style="margin-top: -4px;padding-right: 0px;margin-left: 37px; width: 680px;"><%=comment%></label><br></p>
+            <!-- Start: NombreDelUsuario --><label class="d-xl-flex align-items-xl-start" style="margin-left: 30px;margin-top: 38px;padding-right: 1px;margin-right: 962px;"><%=nombreUsuario%></label>
+            <!-- End: NombreDelUsuario -->
+        </div>
+        <!-- End: ComentarioDeUnUsuario -->
+        <%      }
+            }
+        }
+     %>
+    </div>
+    <!-- End: Comentarios -->
+    <%
+        if (hasBought){
+            System.out.println("Puede escribir una reseña");
+    %>
+    <!-- Start: Escribir comentario -->
+    <div class="container" style="margin-bottom: 85px;">
+        <h1>Escribir comentario</h1>
+        <h5 style="font-style: normal;font-weight: normal;">Para escribir un comentario deberá haber comprado el producto.&nbsp;</h5>
+        <!-- Start: ComentarioDeUnUsuario -->
+        <div class="border rounded" style="margin-top: 19px;margin-bottom: 30px;background-color: rgba(187,187,187,0.17);height: 198px;">
+            <!-- Start: textArea -->
+            <div style="margin-top: 18px;margin-left: 15px;"><textarea class="border rounded d-xl-flex justify-content-xl-center" name="comment" style="width: 1030px;margin-left: 21px;height: 119px;margin-top: 2px;" form="commentForm"></textarea>
+                <!-- Start: button -->
+                <div class="text-right d-xl-flex justify-content-xl-end" style="width: 762px;margin-bottom: -49px;margin-top: 9px;">
+                     <form action="FrontController" id="commentForm">
+                            <input type="hidden" name="idProduct" value="<%=producto.getId()%>">
+                            <input type="hidden" name="idAuthor" value="<%=usuario.getId()%>">
+                            <input type="hidden" name="command" value="SaveCommentCommand">    
+                    <!-- Start: Botón de enviado -->
+                    <div class="btn-group btn-group-sm d-xl-flex justify-content-xl-end" role="group" style="margin-top: -5px;margin-right: -329px;margin-left: 21px;"><button class="btn btn-primary border rounded" type="submit" style="background-color: rgb(41,154,169);margin-right: 38px;margin-top: 11px;"><i class="fas fa-check-circle" style="margin-right: 6px;"></i>Enviar</button></div></form>
+                    <!-- End: Botón de enviado -->
+                </div>
+                <!-- End: button -->
+            </div>
+            <!-- End: textArea -->
+        </div>
+        <!-- End: ComentarioDeUnUsuario -->
+    </div>
+    <%}%>
+    <!-- End: Escribir comentario -->    
     <!-- Start: Footer Dark -->
     <div class="footer-dark">
         <footer>
