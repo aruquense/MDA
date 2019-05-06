@@ -160,3 +160,7 @@ span.stars span {
   background: #4CAF50; /* Green background */
   cursor: pointer; /* Cursor on hover */
 }
+.destacado{
+    width: 200px;
+    height: 200px;
+}

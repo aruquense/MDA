@@ -67,6 +67,7 @@
                                 ArrayList<Producto> list = (ArrayList<Producto>) request.getAttribute("searchList");
                                 for (Producto prod : list) {
                                     String name = prod.getNombre();
+                                    Long id = prod.getId();
                                     Double precio = prod.getPrecio();
                                     String desc = prod.getDescripcion();
                                     HandlerBDD handler = new HandlerBDD();
@@ -83,11 +84,24 @@
                             <td><%=loc%></td>
                             <td><%=nameSeller%></td>                        
                             <td style="width: 360px;">
+                                <%
+                                        Usuario usuario = (Usuario) session.getAttribute("usuario");
+                                        if(usuario!=null){
+                                %>
                                 <form action="FrontController">
                                     <input type="hidden" name="command" value="AddToShoppingCartCommand">
-                                    <input type="hidden" name="idproducto" value=<%= prod.getId().toString()%>>
+                                    <input type="hidden" name="idproducto" value=<%= prod.getId().toString()%>>                                    
                                     <button type="submit"  class="btn btn-primary border rounded" style="margin-right: 11px;margin-left: 0px;width: 193px;background-color: rgb(169,41,41);height: 58px;">
                                         <i class="material-icons float-left" style="padding-right: 9px;margin-right: -11px;margin-left: 4px;">shopping_cart</i>Añadir a la cesta
+                                    </button>
+                                
+                                </form>
+                                <%}%>
+                                <form action="FrontController">
+                                    <input type="hidden" name="command" value="ReadProductCommand">
+                                    <input type="hidden" name="idproducto" value=<%=id%>>
+                                    <button type="submit">
+                                        <i class="fa fa-arrow-circle-right" style="color: #56c6c6;"></i>
                                     </button>
                                 </form>
                             </td>

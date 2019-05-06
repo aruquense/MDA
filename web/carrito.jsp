@@ -39,22 +39,26 @@
                     <h1 style="margin-top: 0px;margin-left: 34px;">Cesta</h1>
                     <!-- End: NombreProducto -->
                 </div>
+                <%  Carrito l = (Carrito) request.getSession().getAttribute("carrito");
+                    Usuario user =(Usuario)session.getAttribute("usuario");
+                    if(request.getAttribute("usuario") !=null){                        
+                        String name = user.toString();
+                    }
+                    List<Producto> productos=null;
+                    if(user !=null){
+                %>
                 <div class="col-md-6 d-xl-flex justify-content-xl-end">
                     <!-- Start: eliminarDeLaCestaButton --><button class="btn btn-primary border rounded" type="button" style="margin-right: 0px;margin-left: 0px;width: 213px;background-color: rgb(85,85,85);height: 43px;margin-top: 8px;padding: 0px;"><i class="fas fa-chevron-circle-down float-left d-xl-flex justify-content-xl-end" style="padding-right: 9px;margin-right: -10px;margin-left: 4px;margin-top: 5px;width: 34px;"></i>Proceder a la compra</button>        <form action="FrontController" method="POST" enctype="multipart/form-data" >    
             <input type="hidden" name="command" value="PayCommand">    
             <input type="submit" value="PayCommand">
-        </form> <!-- End: eliminarDeLaCestaButton -->
+            </form> <!-- End: eliminarDeLaCestaButton -->
+            <%}%>
                     <!-- End: eliminarDeLaCestaButton -->
                 </div>
             </div>
         </div>
     </div>
-        <% Carrito l = (Carrito) request.getSession().getAttribute("carrito");
-        if(request.getAttribute("usuario") !=null){
-            Usuario user = (Usuario)request.getAttribute("usuario");
-            String name = user.toString();
-        }
-        List<Producto> productos=null;%>
+        
         
     <!-- End: 1 Row 2 Columns -->
     <!-- Start: cesta -->

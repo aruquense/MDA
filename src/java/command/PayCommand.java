@@ -20,7 +20,9 @@ public class PayCommand extends FrontCommand {
     public void process() {
         try {
             MarkProductsAsSold();
-            AddProductsToNewOrder();
+            Usuario userNav = (Usuario) session.getAttribute("usuario");          
+            Usuario user = (Usuario) session.getAttribute("usuario");
+            AddProductsToNewOrder(userNav.getId());
             forward("/contrarrembolso.jsp");
             
         } catch (SQLException ex) {
@@ -29,7 +31,7 @@ public class PayCommand extends FrontCommand {
 
     }
 
-    private void AddProductsToNewOrder() {
+    private void AddProductsToNewOrder(Long idUser) {
         HttpSession sesion = request.getSession(true);
  
         Carrito carrito =(Carrito) sesion.getAttribute("carrito");
@@ -37,21 +39,13 @@ public class PayCommand extends FrontCommand {
             carrito = new Carrito();
             carrito.initialize();
             sesion.setAttribute("carrito",carrito);
-        }        
-        Usuario user =(Usuario) sesion.getAttribute("user");
-        if(user == null){
-            user = new Usuario();
-            sesion.setAttribute("user",user);
-        }
-           
-        
-        
+        }                                          
         //NO SE PILLAR EL COMPRADOR
         int idcomprador;
-        idcomprador = Math.toIntExact(1);
+        idcomprador = Math.toIntExact(idUser);
        //NO SE PILLAR EL COMPRADOR
         
-       List<Long> vendedores= carrito.VendedoresDiferentes();
+        List<Long> vendedores= carrito.VendedoresDiferentes();
         Iterator<Long> iterator = vendedores.iterator();
         while (iterator.hasNext()) {
             int idvendedor = Math.toIntExact(iterator.next());

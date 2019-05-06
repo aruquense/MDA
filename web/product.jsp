@@ -69,6 +69,10 @@
                     <!-- Start: Valor del Precio -->
                     <p style="color: #b10c0c;margin-top: -34px;margin-left: 104px;font-weight: bold;"><%= producto.getPrecio() %>€&nbsp;</p>
                     <!-- End: Valor del Precio -->
+                    <%
+                        Usuario usuario = (Usuario) session.getAttribute("usuario");
+                        if(usuario!=null){
+                    %>
                     <div class="btn-group" role="group" style="margin-top: 35px;margin-left: 54px;">
                         <form action="FrontController">
                             <input type="hidden" name="command" value="AddToShoppingCartCommand">
@@ -80,6 +84,7 @@
                         <button
                             class="btn btn-primary border rounded" type="button" style="margin-right: 11px;margin-left: 6px;width: 212px;background-color: rgb(169,41,41);"><i class="material-icons float-left" style="padding-right: 9px;margin-right: -11px;margin-left: 4px;">question_answer</i>Preguntar vendedor</button>
                     </div>
+                    <%}%>
                 </div>
             </div>
         </div>
@@ -89,7 +94,7 @@
     <div class="container" style="margin-bottom: 85px;">
                 <%
                     HandlerBDD handler = new HandlerBDD(); 
-                    Usuario usuario = (Usuario) session.getAttribute("usuario");
+                    
                     boolean hasBought = false;
                     ArrayList<Pedido> pedidos = new ArrayList<Pedido>(); 
                     if (usuario != null){                    

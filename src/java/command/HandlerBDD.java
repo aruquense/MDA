@@ -24,7 +24,7 @@ public class HandlerBDD {
         try{     
             Class.forName("org.postgresql.Driver");      
             System.out.println("Tratando de conectar");
-            this.conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/mdaBDD","postgres","1234");
+            this.conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/mdaBDD3","postgres","1234");
             System.out.println("HEMOS CONECTADO");
         }catch(ClassNotFoundException |SQLException e){
             Logger.getLogger(HandlerBDD.class.getName()).log(Level.SEVERE, null, e);
@@ -676,5 +676,31 @@ String sql = "SELECT * FROM \"public\".\"Usuario\" WHERE nombre='"+nombre+"'";
         cerrarBD(conn);
     }
     
+    public ArrayList<Producto> obtenerProductosOferta(){
+        ArrayList<Producto> list = new ArrayList<>();
+        conectarBD();
+        for(int i = 0; i<3;i++){           
+            String sql = "SELECT * FROM \"public\".\"Producto\" WHERE id="+i;        
+            Statement stmt;
+            try {
+                stmt = conn.createStatement();
+                ResultSet rs = stmt.executeQuery(sql);
+                while (rs.next()) {
+                    Long id = rs.getLong("id");
+                    Long idvendedor = rs.getLong("idvendedor");
+                    Double precio = rs.getDouble("precio");
+                    String descripcion = rs.getString("descripcion");
+                    String img = rs.getString("imagen");
+                    String nombre = rs.getString("nombre");            
+                    Producto producto = new Producto(id,nombre,idvendedor,precio,descripcion,img);
+                    list.add(producto);
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(HandlerBDD.class.getName()).log(Level.SEVERE, null, ex);
+            }        
+        }
+        cerrarBD(conn);
+        return list;
+    }
 }
 
