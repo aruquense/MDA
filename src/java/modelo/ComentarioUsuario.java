@@ -9,7 +9,8 @@ package modelo;
  *
  * @author aru
  */
-public class ComentarioUsuario {private Long idusuario, idvendedor;
+public class ComentarioUsuario {
+    private Long id,idusuario, idvendedor;
     private String comentario;
 
     public Long getIdusuario() {
@@ -36,7 +37,17 @@ public class ComentarioUsuario {private Long idusuario, idvendedor;
         this.comentario = comentario;
     }
 
-    public ComentarioUsuario(Long idusuario, Long idvendedor, String comentario) {
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    
+    public ComentarioUsuario(Long id, Long idusuario, Long idvendedor, String comentario) {
+        this.id = id;
         this.idusuario = idusuario;
         this.idvendedor = idvendedor;
         this.comentario = comentario;

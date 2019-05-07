@@ -34,7 +34,8 @@ public class ViewUserCommand extends FrontCommand {
                         "&localizacion="+localizacion+
                         "&valoracion="+valoracion+         
                         "&nvaloraciones="+nvaloraciones+
-                        "&nvisitas="+nvisitas);
+                        "&nvisitas="+nvisitas+
+                        "&valoracion="+valoracion);
 			
         } catch (Exception ex) {
             Logger.getLogger(ViewUserCommand.class.getName()).log(Level.SEVERE, null, ex);

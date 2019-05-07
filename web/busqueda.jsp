@@ -137,7 +137,10 @@
                                     String loc = user.getLocalizacion();
                                     String ruta = "assets/img/man-user-t-1.png";
                                     Double valoracion = user.getValoracion();
-                                    
+                                    if(user.getnValoraciones()!=0)
+                                        valoracion = valoracion/user.getnValoraciones();                                    
+                                    else
+                                        valoracion = 0.;
                         %>
                         <tr>
                             <!--                        <td><img src="assets/img/61yI7vWa83L._SL1000_.jpg" style="width: 162px;margin-right: -18px;margin-left: -47px;margin-top: -6px;"></td>-->
@@ -145,7 +148,7 @@
                             <td style="width: 300px;padding-top: 21px;"><%=name%></td>
                             <td style="width: 190px;margin-top: 0px;padding-top: 21px;"> <%=correo%> <br><br></td>
                             <td><%=loc%></td>
-                            <td><span class="stars" data-rating="4" data-num-stars="5" ></span></td>                        
+                            <td><%=valoracion%><i class="fa fa-star float-none" style="color: rgb(169,41,41);"></i></td>                        
                             <td style="width: 360px;">
                                 <form action="FrontController">
                                     <input type="hidden" name="command" value="ViewUserCommand">

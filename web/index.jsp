@@ -4,6 +4,9 @@
     Author     : sergio
 --%>
 
+<%@page import="java.util.ArrayList"%>
+<%@page import="modelo.Producto"%>
+<%@page import="command.HandlerBDD"%>
 <%@page import="modelo.Usuario"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -58,41 +61,32 @@
                 <!-- End: Intro -->
                 <!-- Start: Articles -->
                 <div class="row articles" style="margin-top: -41px;">
-                    <div class="col-sm-6 col-md-4 item"><a href="#"><img class="img-fluid" src="assets/img/desk.jpg"></a>
-                        <h3 class="name">Article Title</h3>
-                        <p class="description">Aenean tortor est, vulputate quis leo in, vehicula rhoncus lacus. Praesent aliquam in tellus eu gravida. Aliquam varius finibus est, interdum justo suscipit id.</p><a href="#" class="action"></a>
+                <%
+                    HandlerBDD handler = new HandlerBDD();
+                    ArrayList<Producto> productos = handler.obtenerProductosOferta();
+                    for(Producto producto : productos){
+                        Long id = producto.getId();
+                        String name = producto.getNombre();
+                        String description = producto.getDescripcion();
+                        String img = producto.getImg();
+                    
+                %>                                
+                    <div class="col-sm-6 col-md-4 item">
+                        <div class="destacado">
+                            <a href="#">
+                            <img style="width:200px;height:200px;" class="img-fluid destacado" src=<%=img%>></a>
+                        </div>
+                        <h3 class="name"><%=name%></h3>
+                        <p class="description"><%=description%></p><a href="#" class="action"></a>
                         <form action="FrontController">
                             <input type="hidden" name="command" value="ReadProductCommand">
-                            <input type="hidden" name="idproducto" value="3">
+                            <input type="hidden" name="idproducto" value=<%=id%>>
                             <button type="submit">
                                 <i class="fa fa-arrow-circle-right" style="color: #56c6c6;"></i>
                             </button>
                         </form>
-                    </div>
-                    <div
-                        class="col-sm-6 col-md-4 item"><a href="#"><img class="img-fluid" src="assets/img/building.jpg"></a>
-                        <h3 class="name">Article Title</h3>
-                        <p class="description">Aenean tortor est, vulputate quis leo in, vehicula rhoncus lacus. Praesent aliquam in tellus eu gravida. Aliquam varius finibus est, interdum justo suscipit id.</p><a href="#" class="action"></a>
-                        <form action="FrontController">
-                            <input type="hidden" name="command" value="ReadProductCommand">
-                            <input type="hidden" name="idproducto" value="2">
-                            <button type="submit">
-                                <i class="fa fa-arrow-circle-right" style="color: #56c6c6;"></i>
-                            </button>
-                        </form>
-                    </div>
-                    <div
-                        class="col-sm-6 col-md-4 item"><a href="#"><img class="img-fluid" src="assets/img/loft.jpg"></a>
-                        <h3 class="name">Article Title</h3>
-                        <p class="description">Aenean tortor est, vulputate quis leo in, vehicula rhoncus lacus. Praesent aliquam in tellus eu gravida. Aliquam varius finibus est, interdum justo suscipit id.</p><a href="#" class="action"></a>
-                        <form action="FrontController">
-                            <input type="hidden" name="command" value="ReadProductCommand">
-                            <input type="hidden" name="idproducto" value="1">
-                            <button type="submit">
-                                <i class="fa fa-arrow-circle-right" style="color: #56c6c6;"></i>
-                            </button>
-                        </form>
-                    </div>
+                    </div>                                                    
+                <%}%>
                 </div>
                 <!-- End: Articles -->
             </div>

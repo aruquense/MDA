@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import modelo.Comentario;
+import modelo.ComentarioUsuario;
 import modelo.Pedido;
 import modelo.Usuario;
 
@@ -24,7 +25,7 @@ public class HandlerBDD {
         try{     
             Class.forName("org.postgresql.Driver");      
             System.out.println("Tratando de conectar");
-            this.conn = DriverManager.getConnection("jdbc:postgresql://localhost:5433/mdaBDD3","postgres","1234");
+            this.conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/mdaBDD3","postgres","1234");
             System.out.println("HEMOS CONECTADO");
         }catch(ClassNotFoundException |SQLException e){
             Logger.getLogger(HandlerBDD.class.getName()).log(Level.SEVERE, null, e);
@@ -661,6 +662,18 @@ String sql = "SELECT * FROM \"public\".\"Usuario\" WHERE nombre='"+nombre+"'";
         cerrarBD(conn);
        
     }
+    public void deleteCommentUser(int idcomment){
+        conectarBD();
+        String sql = "DELETE FROM \"public\".\"ComentarioUsuario\" WHERE id="+idcomment;        
+        Statement stmt;
+        try {
+            stmt = conn.createStatement();
+            stmt.executeQuery(sql);            
+        } catch (SQLException ex) {
+            Logger.getLogger(HandlerBDD.class.getName()).log(Level.SEVERE, null, ex);
+        }        
+        cerrarBD(conn);       
+    }
 
     public void updateComment(int idComment, String message) {
         conectarBD();
@@ -679,26 +692,24 @@ String sql = "SELECT * FROM \"public\".\"Usuario\" WHERE nombre='"+nombre+"'";
     public ArrayList<Producto> obtenerProductosOferta(){
         ArrayList<Producto> list = new ArrayList<>();
         conectarBD();
-        for(int i = 0; i<3;i++){           
-            String sql = "SELECT * FROM \"public\".\"Producto\" WHERE id="+i;        
-            Statement stmt;
-            try {
-                stmt = conn.createStatement();
-                ResultSet rs = stmt.executeQuery(sql);
-                while (rs.next()) {
-                    Long id = rs.getLong("id");
-                    Long idvendedor = rs.getLong("idvendedor");
-                    Double precio = rs.getDouble("precio");
-                    String descripcion = rs.getString("descripcion");
-                    String img = rs.getString("imagen");
-                    String nombre = rs.getString("nombre");            
-                    Producto producto = new Producto(id,nombre,idvendedor,precio,descripcion,img);
-                    list.add(producto);
-                }
-            } catch (SQLException ex) {
-                Logger.getLogger(HandlerBDD.class.getName()).log(Level.SEVERE, null, ex);
-            }        
-        }
+        String sql = "SELECT * FROM \"public\".\"Producto\" WHERE vendido IS NULL";        
+        Statement stmt;
+        try {
+            stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
+            while (rs.next()) {
+                Long id = rs.getLong("id");
+                Long idvendedor = rs.getLong("idvendedor");
+                Double precio = rs.getDouble("precio");
+                String descripcion = rs.getString("descripcion");
+                String img = rs.getString("imagen");
+                String nombre = rs.getString("nombre");            
+                Producto producto = new Producto(id,nombre,idvendedor,precio,descripcion,img);
+                list.add(producto);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(HandlerBDD.class.getName()).log(Level.SEVERE, null, ex);
+        }        
         cerrarBD(conn);
         return list;
     }
@@ -717,6 +728,28 @@ String sql = "SELECT * FROM \"public\".\"Usuario\" WHERE nombre='"+nombre+"'";
             Logger.getLogger(HandlerBDD.class.getName()).log(Level.SEVERE, null, ex);
         }
         cerrarBD(conn);
+    }
+    public ArrayList<ComentarioUsuario> readCommentsFromUser(long idUser){
+        ArrayList<ComentarioUsuario> list = new ArrayList<>();
+        conectarBD();
+        String sql = "Select * from public.\"ComentarioUsuario\" where \"id_usuarioReceptor\" ="+idUser;        
+        Statement stmt;
+        try {
+            stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
+            while (rs.next()) {                
+                Long id = rs.getLong("id");
+                Long idReceptor = rs.getLong("id_usuarioReceptor");
+                Long idEmisor = rs.getLong("id_usuarioEmisor");
+                String comentario = rs.getString("comentario");                
+                ComentarioUsuario comentarioUsuario = new ComentarioUsuario(id,idEmisor, idReceptor, comentario);
+                list.add(comentarioUsuario);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(HandlerBDD.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        cerrarBD(conn);
+        return list;
     }
 }
 
