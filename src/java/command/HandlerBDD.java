@@ -24,7 +24,7 @@ public class HandlerBDD {
         try{     
             Class.forName("org.postgresql.Driver");      
             System.out.println("Tratando de conectar");
-            this.conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/mdaBDD3","postgres","1234");
+            this.conn = DriverManager.getConnection("jdbc:postgresql://localhost:5433/mdaBDD3","postgres","1234");
             System.out.println("HEMOS CONECTADO");
         }catch(ClassNotFoundException |SQLException e){
             Logger.getLogger(HandlerBDD.class.getName()).log(Level.SEVERE, null, e);
@@ -706,7 +706,7 @@ String sql = "SELECT * FROM \"public\".\"Usuario\" WHERE nombre='"+nombre+"'";
 		    void comentarUsuario(int idVendedor, int idUsuario, String comentario) {
         conectarBD();        
         String sql = "INSERT INTO public.\"ComentarioUsuario\"(\n" +
-"	\"id_usuarioReceptor\", id_usuario_comentario, comentario)\n" +
+"	\"id_usuarioReceptor\", \"id_usuarioEmisor\", comentario)\n" +
 "	VALUES ("+idVendedor+", "+idUsuario+", \'"+comentario+"\');";        
 
         PreparedStatement enrollItmt;

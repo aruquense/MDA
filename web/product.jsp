@@ -60,8 +60,20 @@
                     <h3 class="text-left" style="margin-top: 35px;">Vendedor:&nbsp;</h3>
                     <!-- End: EtiquetaPrecio -->
                     <!-- Start: Valor del Precio -->
-                    <p style="color: #56c6c6;margin-top: -34px;margin-left: 152px;font-weight: bold;"><%=name%><i class="fa fa-star float-none" style="margin-left: 42px;color: rgb(169,41,41);"></i><i class="fa fa-star float-none" style="margin-left: 3px;color: rgb(169,41,41);"></i><i class="fa fa-star float-none"
-                            style="margin-left: 3px;color: rgb(169,41,41);"></i><i class="fa fa-star float-none" style="margin-left: 3px;color: rgb(169,41,41);"></i><i class="fa fa-star float-none" style="margin-left: 3px;color: rgb(152,151,151);"></i></p>
+                    <p style="color: #56c6c6;margin-top: -34px;margin-left: 152px;font-weight: bold;">
+                        <%=name%><i class="fa fa-star float-none" style="margin-left: 42px;color: rgb(169,41,41);"></i>
+                        <i class="fa fa-star float-none" style="margin-left: 3px;color: rgb(169,41,41);"></i>
+                        <i class="fa fa-star float-none"
+                            style="margin-left: 3px;color: rgb(169,41,41);"></i>
+                        <i class="fa fa-star float-none" style="margin-left: 3px;color: rgb(169,41,41);"></i>
+                        <i class="fa fa-star float-none" style="margin-left: 3px;color: rgb(152,151,151);"></i></p>
+                        <form action="FrontController">
+                            <input type="hidden" name="command" value="ViewUserCommand">
+                            <input type="hidden" name="idUser" value="<%=producto.getIdvendedor()%>">
+                            <button type="submit"  class="btn btn-primary border rounded" style="background-color: rgb(169,41,41); height: 58px;width: 150px">
+                                <i class="material-icons float-right" style="">user_comment</i>Ir al vendedor
+                            </button>
+                        </form>
                     <!-- End: Valor del Precio -->
                     <!-- Start: EtiquetaPrecio -->
                     <h3 class="text-left" style="margin-top: 35px;">Precio:&nbsp;</h3>
