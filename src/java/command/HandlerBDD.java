@@ -689,6 +689,20 @@ String sql = "SELECT * FROM \"public\".\"Usuario\" WHERE nombre='"+nombre+"'";
         cerrarBD(conn);
     }
     
+    public void updateCommentUser(int idComment, String message) {
+        conectarBD();
+        String sql = "UPDATE \"public\".\"ComentarioUsuario\" SET comentario = ?  WHERE id="+idComment+"";
+        PreparedStatement enrollItmt;
+        try {
+            enrollItmt = this.conn.prepareStatement(sql);
+            enrollItmt.setString(1, message);
+            enrollItmt.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(HandlerBDD.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        cerrarBD(conn);
+    }
+    
     public ArrayList<Producto> obtenerProductosOferta(){
         ArrayList<Producto> list = new ArrayList<>();
         conectarBD();
