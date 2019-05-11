@@ -43,7 +43,13 @@
         <div class="container">
             <!-- Start: NombreUsuario -->
 
-            <h1 style="margin-top: 30px;"><%= request.getParameter("nombre")%></h1>
+            <h1 style="margin-top: 30px;"><%= request.getParameter("nombre")
+                %>                 
+
+                        
+                       
+  
+                        
             <!-- End: NombreUsuario -->
         </div>
         <!-- Start: 1 Row 2 Columns -->
@@ -133,9 +139,9 @@
                 <!-- Start: ComentarioDeUnUsuario -->
                 <div class="border rounded" style="margin-top: 19px;margin-bottom: 30px;background-color: rgba(187,187,187,0.17);height: 198px;">
                     <!-- Start: textArea -->
-                    <div style="margin-top: 18px;margin-left: 15px;"><textarea class="border rounded d-xl-flex justify-content-xl-center" name="comentario" style="width: 1030px;margin-left: 21px;height: 119px;margin-top: 2px;" form="commentForm"></textarea>
+                    <form action="FrontController" id="commentForm">                            
+                        <div style="margin-top: 18px;margin-left: 15px;"><textarea class="border rounded d-xl-flex justify-content-xl-center" name="comentario" style="width: 1030px;margin-left: 21px;height: 119px;margin-top: 2px;" form="commentForm"></textarea>
                         <!-- Start: button -->                        
-                        <form action="FrontController" id="commentForm">                            
                             <input type="hidden" name="idvendedor" value=<%=idvendedor%>>
                             <input type="hidden" name="idusuariocomentando" value=<%=usuario.getId()%>>
                             <input type="hidden" name="command" value="ComentarUsuario">

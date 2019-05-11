@@ -24,6 +24,7 @@ public class UpdateUserCommand extends FrontCommand {
         String contrasena2 = request.getParameter("contrasena2");
         String localizacion = request.getParameter("localizacion");
         handler.actualizarUsuario(idUser, nombre, correo, contrasena, contrasena2,localizacion);
+        forward("/confirmacioncambiodatosusuario.jsp");
     }        
     
 

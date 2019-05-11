@@ -4,6 +4,7 @@
     Author     : Sergio
 --%>
 
+<%@page import="modelo.Usuario"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -25,8 +26,12 @@
 <body>
     <!-- Start: Navigation with Button -->
     <%@include file="navbar.jsp" %>
-    <!-- End: Navigation with Button -->
+    <!-- End: Navigation with Button -->        
+    <%Usuario usuario = (Usuario) session.getAttribute("usuario");
+
+        %>
     <!-- Start: 1 Row 2 Columns -->
+    <form action="FrontController" method="POST" enctype="multipart/form-data" >
     <div>
         <div class="container">
             <div class="row" style="margin-top: 25px;margin-bottom: 56px;">
@@ -36,7 +41,6 @@
                     <!-- End: NombreProducto -->
                 </div>
                 <div class="col-md-6 d-xl-flex justify-content-xl-end">
-                    <!-- Start: eliminarDeLaCestaButton --><button class="btn btn-primary border rounded" type="button" style="margin-right: 0px;margin-left: 0px;width: 178px;background-color: rgb(85,85,85);height: 43px;margin-top: 8px;padding: 0px;"><i class="fas fa-chevron-circle-down float-left d-xl-flex justify-content-xl-end" style="padding-right: 9px;margin-right: -10px;margin-left: 4px;margin-top: 5px;width: 34px;"></i>Confirmar datos</button>
                     <!-- End: eliminarDeLaCestaButton -->
                 </div>
             </div>
@@ -59,9 +63,28 @@
                 </div>
                 <div class="col-md-6" style="margin: 0px;">
                     <div style="margin-bottom: 0px;">
-                        <h4>Nombre:</h4><input class="border rounded border-dark shadow-sm" type="text" style="width: 475px;height: 43px;margin-top: 5px;"></div>
+                        <strong><h4>Todos los campos han de ser cumplimentados</h4></strong>
+                     <div style="margin-bottom: 0px;">
+                        <h4>Nombre:</h4>
+                        <input class="border rounded border-dark shadow-sm" type="text" placeholder="nombre" name="nombre"  value="<%= usuario.getNombre()%>" required style="width: 475px;height: 43px;margin-top: 5px;"></div>
+                        
+                        
+                        
                     <div style="margin-bottom: 0px;">
-                        <h4 style="margin-top: 25px;">Ubicación:</h4><input class="border rounded border-dark shadow-sm" type="text" style="width: 475px;height: 43px;margin-top: 5px;"></div>
+                        <h4 style="margin-top: 25px;">Ubicación:</h4>
+                        <input class="border rounded border-dark shadow-sm" type="text" placeholder="Ubicación" name="localizacion" value="<%= usuario.getLocalizacion()%>" required style="width: 475px;height: 43px;margin-top: 5px;"></div>
+                    <div style="margin-bottom: 0px;">
+                        <h4 style="margin-top: 25px;">Correo:</h4>
+                        <input class="border rounded border-dark shadow-sm" type="text" placeholder="Correo" name="correo" value="<%= usuario.getCorreo()%>" required style="width: 475px;height: 43px;margin-top: 5px;"></div>
+                    <div style="margin-bottom: 0px;">
+                        <h4 style="margin-top: 25px;">Contraseña:</h4>
+                        <input class="border rounded border-dark shadow-sm" type="password" placeholder="Contraseña" name="contrasena" value="" required style="width: 475px;height: 43px;margin-top: 5px;"></div>
+                    <div style="margin-bottom: 0px;">
+                        <h4 style="margin-top: 25px;">Repita contraseña:</h4>
+                        <input class="border rounded border-dark shadow-sm" type="password" placeholder="Repita Contraseña" name="contrasena2" value="" required style="width: 475px;height: 43px;margin-top: 5px;"></div>
+                        
+                        
+                        
                     <div style="margin-bottom: 0px;">
                         <h4 style="margin-top: 25px;">Opciones de privacidad:</h4>
                         <div style="margin-bottom: 47;margin-top: 15px;margin-left: 9px;">
@@ -83,14 +106,22 @@
             <div class="row" style="margin-top: -15px;margin-bottom: 56px;">
                 <div class="col-md-6"></div>
                 <div class="col-md-6 d-xl-flex justify-content-xl-end" style="margin-top: 39px;">
-                    <!-- Start: eliminarDeLaCestaButton --><button class="btn btn-primary border rounded" type="button" style="margin-right: 22px;margin-left: 0px;width: 126px;background-color: rgb(169,41,41);height: 43px;margin-top: 8px;padding: 0px;"><i class="icon ion-close float-left d-xl-flex justify-content-xl-end" style="padding-right: 9px;margin-right: -12px;margin-left: 2px;margin-top: 4px;width: 34px;"></i>Cancelar</button>
+                    <!-- Start: eliminarDeLaCestaButton --><button  onclick="window.history.back()" class="btn btn-primary border rounded" type="button" style="margin-right: 22px;margin-left: 0px;width: 126px;background-color: rgb(169,41,41);height: 43px;margin-top: 8px;padding: 0px;"><i class="icon ion-close float-left d-xl-flex justify-content-xl-end" style="padding-right: 9px;margin-right: -12px;margin-left: 2px;margin-top: 4px;width: 34px;"></i>Volver</button>
                     <!-- End: eliminarDeLaCestaButton -->
-                    <!-- Start: eliminarDeLaCestaButton --><button class="btn btn-primary border rounded" type="button" style="margin-right: 0px;margin-left: 0px;width: 178px;background-color: rgb(85,85,85);height: 43px;margin-top: 8px;padding: 0px;"><i class="fas fa-chevron-circle-down float-left d-xl-flex justify-content-xl-end" style="padding-right: 9px;margin-right: -10px;margin-left: 4px;margin-top: 5px;width: 34px;"></i>Confirmar datos</button>
+                    <!-- Start: eliminarDeLaCestaButton -->
+                    
+                    <input type="hidden" placeholder="id" name="idUser" value="<%= usuario.getId()%>" required>
+            <input type="hidden" name="command" value="UpdateUserCommand">
+            <input value="Confirmar datos" class="btn btn-primary border rounded" type="submit" style="margin-right: 0px;margin-left: 0px;width: 178px;background-color: rgb(85,85,85);height: 43px;margin-top: 8px;padding: 0px;"><i class="fas fa-chevron-circle-down float-left d-xl-flex justify-content-xl-end" style="padding-right: 9px;margin-right: -10px;margin-left: 4px;margin-top: 5px;width: 34px;"></i></input>
+                    
+            
                     <!-- End: eliminarDeLaCestaButton -->
                 </div>
             </div>
         </div>
     </div>
+    
+    </form>
     <!-- End: 1 Row 2 Columns -->
     <!-- Start: Footer Dark -->
     <div class="footer-dark">
