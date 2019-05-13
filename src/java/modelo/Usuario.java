@@ -3,12 +3,12 @@ package modelo;
 public class Usuario {
     private Long id;
     private int nVentas, nVisitas,nValoraciones;
-    private String nombre, correo, contrasena,localizacion;
+    private String nombre, correo, contrasena,localizacion,imagen;
     private Double valoracion;
     private Integer[] idpedidos;
     private boolean espremium;
 
-    public Usuario(Long id, int nVentas, int nVisitas,String localizacion, String nombre, String correo, String contrasena, Double valoracion, Integer[] idpedidos, int espremium, int nvaloraciones) {
+    public Usuario(Long id, int nVentas, int nVisitas,String localizacion, String nombre, String correo, String contrasena, Double valoracion, Integer[] idpedidos, int espremium, int nvaloraciones, String imagen) {
         this.id = id;
         this.nVentas = nVentas;
         this.nVisitas = nVisitas;
@@ -20,7 +20,17 @@ public class Usuario {
         this.idpedidos = idpedidos;
         this.espremium = (espremium == 0);      
         this.nValoraciones=nvaloraciones;
-    }    
+        this.imagen=imagen;
+    } 
+
+    public String getImagen() {
+        return imagen;
+    }
+
+    public void setImagen(String imagen) {
+        this.imagen = imagen;
+    }
+
     public Usuario(Long id, int nVentas, int nVisitas,String localizacion, String nombre, String correo, String contrasena, Double valoracion, Integer[] idpedidos, int espremium) {
         this.id = id;
         this.nVentas = nVentas;

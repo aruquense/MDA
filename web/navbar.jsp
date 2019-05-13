@@ -31,7 +31,7 @@
                             <li class="nav-item" role="presentation">
                             <div class="container">
                                     <div class="row">
-                                        <div class="col-md-24">
+                                        <div class="col-sm-12">
                                         <div class="input-group" id="adv-search">
                                             <form action="FrontController" class="form-inline">
                                                 <input type="hidden" name="command" value="SearchCommand">
@@ -109,6 +109,7 @@
 
                             </li>
                             <%if(userNav!=null){%>
+                            
                             </ul><span class="navbar-text actions"> 
                                     <strong>"<%= userNav.getNombre()%>"</strong>
                                     <a href="modificarPerfilUsuario.jsp"><img src="assets/img/config.png" width="20" height="20" title="Modificar Perfil" alt="Modificar Perfil"></a>

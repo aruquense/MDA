@@ -56,7 +56,7 @@
         <div style="margin-top: 13px;margin-bottom: 95px;">
             <div class="container">
                 <div class="row">
-                    <div class="col-md-6 offset-xl-0" style="margin-left: -30px;"><img src="assets/img/man-user-t-1.png" style="height: 200px;width: 200px;margin-bottom: 0px;margin-top: 5px;margin-right: 0px;"></div>
+                    <div class="col-md-6 offset-xl-0" style="margin-left: -30px;"><img src="<%= request.getParameter("img")%>" style="height: 200px;width: 200px;margin-bottom: 0px;margin-top: 5px;margin-right: 0px;"></div>
                     <!--<div class="col-md-6 offset-xl-0" style="margin-left: -30px;"><img src=<%= request.getParameter("img")%> style="width: 444px;margin-bottom: 0px;margin-top: 5px;margin-right: 0px;"></div>-->
                     <div class="col-md-6">
                         <!-- Start: DescripcionLabel -->

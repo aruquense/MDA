@@ -52,14 +52,14 @@
         <div class="container">
             <div class="row" style="margin-bottom: 70px;">
                 <div class="col-md-6">
-                    <!-- Start: ImagenProducto --><img class="img-thumbnail border rounded-circle border-dark shadow" src="assets/img/imagen_perfil.jpg" style="width: 402px;margin-top: 0px;margin-left: 47px;background-color: rgb(169,41,41);">
+                    <!-- Start: ImagenProducto --><img class="img-thumbnail border rounded-circle border-dark shadow" src="<%= usuario.getImagen()%>" style="width: 402px;margin-top: 0px;margin-left: 47px;background-color: rgb(169,41,41);">
                     <!-- End: ImagenProducto -->
-                    <div style="margin-bottom: 0px;">
+                    <!--<div style="margin-bottom: 0px;">
                         <div class="btn-group" role="group" style="margin-top: 35px;margin-left: 54px;"><button class="btn btn-primary border rounded" type="button" style="margin-right: 11px;margin-left: 0px;width: 193px;background-color: rgb(169,41,41);height: 58px;"><i class="icon ion-close float-left" style="padding-right: 9px;margin-right: -18px;margin-left: 12px;"></i>Eliminar Imagen</button>
                             <button
                                 class="btn btn-primary border rounded" type="button" style="margin-right: 11px;margin-left: 6px;width: 177px;background-color: rgb(85,85,85);"><i class="material-icons float-left" style="padding-right: 9px;margin-right: -11px;margin-left: 4px;">file_upload</i>Subir Imagen</button>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
                 <div class="col-md-6" style="margin: 0px;">
                     <div style="margin-bottom: 0px;">
@@ -85,16 +85,7 @@
                         
                         
                         
-                    <div style="margin-bottom: 0px;">
-                        <h4 style="margin-top: 25px;">Opciones de privacidad:</h4>
-                        <div style="margin-bottom: 47;margin-top: 15px;margin-left: 9px;">
-                            <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-1"><label class="form-check-label" for="formCheck-1">Mostrar ubicación</label></div>
-                            <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-1"><label class="form-check-label" for="formCheck-1">Mostrar visitas al perfil</label></div>
-                            <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-1"><label class="form-check-label" for="formCheck-1">Mostrar valoraciones</label></div>
-                            <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-1"><label class="form-check-label" for="formCheck-1">Mostrar productos a la venta</label></div>
-                            <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-1"><label class="form-check-label" for="formCheck-1">Mostrar productos vendidos</label></div>
-                        </div>
-                    </div>
+
                 </div>
             </div>
         </div>

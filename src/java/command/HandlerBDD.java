@@ -242,7 +242,8 @@ public class HandlerBDD {
         int id = encontrarNumeroUsuarios();        
         if(!userExists(idnombre)){                    
             conectarBD();
-            String sql = "INSERT INTO \"public\".\"Usuario\"(id,nombre,espremium,correo,contrasena,localizacion,valoracion,nventas,nvisitas) VALUES ("+id+",'"+idnombre+"',0, '"+idcorreo+"','"+idcontrasena+"', '"+idlocalizacion+"',0,0,0);";        
+            String sql2 = "INSERT INTO \"public\".\"Usuario\"(id,nombre,espremium,correo,contrasena,localizacion,valoracion,nventas,nvisitas,img) VALUES ("+(id+1)+",'"+idnombre+"',0, '"+idcorreo+"','"+idcontrasena+"', '"+idlocalizacion+"',0,0,0,'web\\assets\\img\\man-user-t-1.png');";  
+            String sql = "INSERT INTO \"public\".\"Usuario\"(id,nombre,espremium,correo,contrasena,localizacion,valoracion,nventas,nvisitas,img,nvaloraciones) VALUES ("+(id+1)+",'"+idnombre+"',0, '"+idcorreo+"','"+idcontrasena+"', '"+idlocalizacion+"',0,0,0,'./imgs/man-user-t-1.png',0);";        
             PreparedStatement enrollItmt;
             try {
                 enrollItmt = this.conn.prepareStatement(sql);
@@ -328,6 +329,7 @@ public class HandlerBDD {
                 String correo = rs.getString("correo");
                 String contrasena = rs.getString("contrasena");
                 String localizacion = rs.getString("localizacion");
+                String img = rs.getString("img");
                 Array productos = rs.getArray("idpedidos");            
                 Integer[] idpedidos = new Integer[]{};
                 if(productos != null)
@@ -336,8 +338,9 @@ public class HandlerBDD {
                 int nventas = Math.toIntExact(rs.getLong("nventas"));
                 int nvisitas = Math.toIntExact(rs.getLong("nvisitas"));
                 int nvaloraciones=rs.getInt("nvaloraciones");
+                
                 long id = rs.getLong("id");
-                user = new Usuario(id, nventas, nvisitas,localizacion, nombre, correo, contrasena, valoracion, idpedidos,esPremium,nvaloraciones);
+                user = new Usuario(id, nventas, nvisitas,localizacion, nombre, correo, contrasena, valoracion, idpedidos,esPremium,nvaloraciones,img);
 
             }
         }catch(SQLException e){
@@ -389,7 +392,9 @@ public class HandlerBDD {
                 int nvisitas = Math.toIntExact(rs.getLong("nvisitas"));
                 long id = rs.getLong("id");
                 int nvaloraciones=rs.getInt("nvaloraciones");
-                user = new Usuario(id, nventas, nvisitas,localizacion, nombre, correo, contrasena, valoracion, idpedidos,esPremium,nvaloraciones);
+                
+                String img = rs.getString("img");
+                user = new Usuario(id, nventas, nvisitas,localizacion, nombre, correo, contrasena, valoracion, idpedidos,esPremium,nvaloraciones,img);
                 System.out.println("SE HA CREADO EL USUARIO");
             }
         } catch (SQLException ex) {
@@ -424,16 +429,18 @@ public class HandlerBDD {
     }    
 
 void actualizarUsuario(int idUser, String nombre, String correo, String contrasena, String contrasena2, 
-            String localizacion) {
+            String localizacion,String path) {
         conectarBD();
         
 
-        String sql ="UPDATE public.\"Usuario\" SET nombre=?, correo=?, contrasena=?, localizacion=? WHERE ID="+idUser+"";
+        String sql ="UPDATE public.\"Usuario\" SET nombre=?, correo=?, contrasena=?, localizacion=?,img=? WHERE ID="+idUser+"";
         PreparedStatement enrollItmt;
         try {
             enrollItmt = this.conn.prepareStatement(sql);
             enrollItmt.setString(1, nombre);
             enrollItmt.setString(2, correo);
+            enrollItmt.setString(4, path);
+            
             if (contrasena.equals(contrasena2)){
                 enrollItmt.setString(3, contrasena);
             }else{
@@ -539,7 +546,9 @@ String sql = "SELECT * FROM \"public\".\"Usuario\" WHERE nombre='"+nombre+"'";
                 int nvisitas = Math.toIntExact(rs.getLong("nvisitas"));
                 int nvaloraciones=rs.getInt("nvaloraciones");
                 long id = rs.getLong("id");
-                searchList.add(new Usuario(id, nventas, nvisitas,localizacion, nombre, correo, contrasena, valoracion, idpedidos,esPremium,nvaloraciones));
+                
+                String img = rs.getString("img");
+                searchList.add(new Usuario(id, nventas, nvisitas,localizacion, nombre, correo, contrasena, valoracion, idpedidos,esPremium,nvaloraciones,img));
             }  
         }catch(SQLException e){
             

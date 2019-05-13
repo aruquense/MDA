@@ -27,6 +27,7 @@ public class ViewUserCommand extends FrontCommand {
 		int nvaloraciones = user.getnValoraciones();
 		Double valoracion = user.getValoracion()/(nvaloraciones);
 		int nvisitas =user.getnVisitas()+1;
+		String img = user.getImagen();
                 handler.updateNVisitas(idUser,nvisitas);
                         
 		forward("/user.jsp?nombre="+nombre+
@@ -35,6 +36,7 @@ public class ViewUserCommand extends FrontCommand {
                         "&valoracion="+valoracion+         
                         "&nvaloraciones="+nvaloraciones+
                         "&nvisitas="+nvisitas+
+                        "&img="+img+
                         "&valoracion="+valoracion);
 			
         } catch (Exception ex) {
