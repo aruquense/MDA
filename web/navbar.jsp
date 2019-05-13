@@ -109,7 +109,10 @@
 
                             </li>
                             <%if(userNav!=null){%>
-                            </ul><span class="navbar-text actions"><a class="btn btn-light action-button" role="button" href="modificarPerfilUsuario.jsp">Modificar <strong>"<%= userNav.getNombre()%>"</strong></a><a class="btn btn-light action-button" role="button" href="unlogin.jsp">Cerrar sesión</a></span></div>
+                            </ul><span class="navbar-text actions"> 
+                                    <strong>"<%= userNav.getNombre()%>"</strong>
+                                    <a href="modificarPerfilUsuario.jsp"><img src="assets/img/config.png" width="20" height="20" title="Modificar Perfil" alt="Modificar Perfil"></a>
+                                    <a class="btn btn-light action-button" role="button" href="unlogin.jsp">Cerrar sesión</a></span></div>
                     <%}else{%>
                         </ul><span class="navbar-text actions"> <a href="login.jsp" class="login">Inicia sesión</a><a class="btn btn-light action-button" role="button" href="register.jsp">Registrate</a></span></div>
                     <%}%>
